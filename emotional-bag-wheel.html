@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="My Bag" />
+  <meta name="theme-color" content="#1C1812" />
+  <title>The Emotional Loadout Wheel</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body { background: #1C1812; min-height: 100vh; overscroll-behavior: none; }
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      color: #E8D9B8;
+      background: #1C1812;
+      background-image: radial-gradient(ellipse at 20% 20%, #2A2218 0%, #1C1812 60%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 16px env(safe-area-inset-bottom);
+    }
+
+    .header { text-align: center; margin-bottom: 24px; }
+    .header-sub { font-size: 11px; letter-spacing: 4px; color: #A08060; text-transform: uppercase; margin-bottom: 6px; }
+    .header h1 { font-size: clamp(20px, 5vw, 28px); font-weight: normal; color: #E8C87A; letter-spacing: 1px; }
+    .header p { font-size: 12px; color: #8A7A60; margin-top: 8px; font-style: italic; }
+
+    .wheel-wrap { width: min(400px, 95vw); }
+    svg { width: 100%; filter: drop-shadow(0 8px 32px rgba(0,0,0,0.6)); }
+
+    .slice { cursor: pointer; transition: all 0.25s ease; }
+    .slice:active { opacity: 0.7; }
+
+    .card-wrap { width: 100%; max-width: 440px; margin-top: 20px; min-height: 200px; }
+
+    .card {
+      background: linear-gradient(135deg, #2A2218, #221E14);
+      border-radius: 12px;
+      padding: 20px 22px;
+      transition: opacity 0.15s ease;
+      border-left-width: 3px;
+      border-left-style: solid;
+    }
+    .card.flash { opacity: 0.2; }
+
+    .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .card-top-left { display: flex; align-items: center; gap: 10px; }
+    .card-emoji { font-size: 24px; }
+    .card-label { font-size: 17px; font-weight: normal; }
+    .card-sublabel { font-size: 9px; color: #6A5A40; letter-spacing: 2px; text-transform: uppercase; }
+    .card-top-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .mission-counter { font-size: 9px; color: #6A5A40; }
+
+    .shuffle-btn {
+      border-radius: 20px; padding: 5px 12px; font-size: 11px;
+      cursor: pointer; font-family: Georgia, serif; letter-spacing: 0.5px;
+      border-width: 1px; border-style: solid;
+      transition: opacity 0.2s;
+    }
+    .shuffle-btn:active { opacity: 0.6; }
+
+    .dots { display: flex; gap: 5px; margin-bottom: 12px; }
+    .dot { height: 6px; border-radius: 3px; cursor: pointer; transition: all 0.25s ease; }
+
+    .section-label { font-size: 9px; color: #A08060; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 7px; }
+
+    .items { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+    .item-tag { border-radius: 20px; padding: 3px 11px; font-size: 11px; border-width: 1px; border-style: solid; }
+
+    .mission-text { font-size: 13px; color: #C8B890; font-style: italic; line-height: 1.65; margin-bottom: 11px; }
+
+    .ritual { padding-top: 10px; font-size: 11px; color: #6A5A40; border-top-width: 1px; border-top-style: solid; }
+
+    .empty-card {
+      text-align: center; padding: 32px; color: #4A3A28;
+      font-size: 13px; font-style: italic;
+      border: 1px dashed #3A2E20; border-radius: 12px;
+    }
+
+    .bag-legend {
+      width: 100%; max-width: 440px; margin-top: 20px;
+      background: #1E1A12; border: 1px solid #3A2E20;
+      border-radius: 12px; padding: 16px 20px;
+    }
+    .bag-legend-title { font-size: 9px; color: #A08060; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; }
+    .bag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+    .bag-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #7A6A50; }
+    .bag-item-icon { font-size: 13px; }
+
+    .footer { margin-top: 18px; font-size: 10px; color: #3A2E20; font-style: italic; padding-bottom: 16px; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-sub">Your Adventure Kit</div>
+  <h1>The Emotional Loadout Wheel</h1>
+  <p>Tap an emotion · tap again to shuffle missions</p>
+</div>
+
+<div class="wheel-wrap">
+  <svg id="wheel" viewBox="0 0 400 400"></svg>
+</div>
+
+<div class="card-wrap">
+  <div id="card-container">
+    <div class="empty-card">Tap any emotion on the wheel<br>to see your bag's response</div>
+  </div>
+</div>
+
+<div class="bag-legend">
+  <div class="bag-legend-title">What's in the Bag</div>
+  <div class="bag-grid">
+    <div class="bag-item"><span class="bag-item-icon">📔</span>Leather Journal</div>
+    <div class="bag-item"><span class="bag-item-icon">✏️</span>Sketchbook</div>
+    <div class="bag-item"><span class="bag-item-icon">📱</span>iPad Mini 6</div>
+    <div class="bag-item"><span class="bag-item-icon">📖</span>Book</div>
+    <div class="bag-item"><span class="bag-item-icon">🎮</span>Switch OLED</div>
+    <div class="bag-item"><span class="bag-item-icon">💳</span>Wallet</div>
+    <div class="bag-item"><span class="bag-item-icon">📷</span>35mm Camera</div>
+    <div class="bag-item"><span class="bag-item-icon">📿</span>Rosary</div>
+    <div class="bag-item"><span class="bag-item-icon">🔌</span>2× Chargers</div>
+    <div class="bag-item"><span class="bag-item-icon">🍬</span>Pack of Gum</div>
+  </div>
+</div>
+
+<div class="footer">© Aldi Airori 2026 · The bag is always ready</div>
+
+<script>
+const emotions = [
+  {
+    id: "bored", label: "Bored", emoji: "😐", color: "#C9A84C", lightColor: "#F5E8C0",
+    items: ["📷 Film Camera", "🎮 Switch", "📖 Book"],
+    missions: [
+      { prompt: "Walk somewhere new. Photograph the first interesting thing you find.", ritual: "Camera strap on. Walk out. No destination." },
+      { prompt: "Open the Switch and start a game you've been putting off. Give it one hour.", ritual: "Couch or bench. Switch on. No guilt." },
+      { prompt: "Go to a bookstore or library. Pick up a book you know nothing about.", ritual: "Browse slowly. Touch the spines. Let one choose you." },
+      { prompt: "Sit in a park and sketch whatever is directly in front of you for 20 minutes.", ritual: "Sketchbook open. No erasing. Just draw what you see." },
+      { prompt: "Walk to the nearest coffee shop. Order something you've never tried.", ritual: "New drink. New seat. Watch people for a while." },
+    ]
+  },
+  {
+    id: "sad", label: "Sad", emoji: "😢", color: "#7B9EA8", lightColor: "#D6E8ED",
+    items: ["📔 Leather Journal", "📿 Rosary", "☕ Find a café"],
+    missions: [
+      { prompt: "Sit somewhere warm. Write without editing. Let it out on paper.", ritual: "Order something warm. Journal open. No pressure." },
+      { prompt: "Hold your rosary and sit outside for ten minutes. No phone.", ritual: "Rosary in hand. Eyes soft. Just breathe." },
+      { prompt: "Write a letter in your journal to your past self. Tell them something kind.", ritual: "Quiet corner. Pen slow. Be gentle with yourself." },
+      { prompt: "Find a park bench. Read one chapter. Just one.", ritual: "Bench. Book open. The world can wait." },
+      { prompt: "Take the camera out. Photograph only things that feel like quiet or stillness.", ritual: "Slow walk. Quiet eye. Let the lens be your feeling." },
+    ]
+  },
+  {
+    id: "restless", label: "Restless", emoji: "😤", color: "#C17E4A", lightColor: "#F0DCC8",
+    items: ["📷 Film Camera", "👟 Just walk"],
+    missions: [
+      { prompt: "Walk fast, camera in hand. Don't stop until something slows you down.", ritual: "Fast walk. Shoot on instinct. No thinking." },
+      { prompt: "Pick a direction you never go. Walk 15 minutes out, 15 back.", ritual: "Earphones out. Bag on. Just go." },
+      { prompt: "Find the tallest hill or building nearby. Climb it. Look out.", ritual: "Move the body. Let the view reset you." },
+      { prompt: "Go somewhere new and sketch the first scene you sit down in front of.", ritual: "Unfamiliar place. Sketchbook out. Settle yourself with a drawing." },
+      { prompt: "Take the Switch somewhere outside. Play on a bench. Change your scenery.", ritual: "Outside air. Game in hand. Move the restless somewhere new." },
+    ]
+  },
+  {
+    id: "angry", label: "Angry", emoji: "😠", color: "#B85C5C", lightColor: "#EDD4D4",
+    items: ["👟 Leave immediately", "📔 Journal after"],
+    missions: [
+      { prompt: "Leave. Walk hard. Don't decide where until 10 minutes in.", ritual: "Bag on shoulder. Door open. Walk it out." },
+      { prompt: "Find a bench far from where you started. Write everything down raw.", ritual: "Walk first. Journal second. No filter." },
+      { prompt: "Walk until you find something beautiful. Photograph it. Breathe.", ritual: "Move. Find beauty. Let it disarm you." },
+      { prompt: "Go somewhere with water — a fountain, a river, a pond. Sit near it.", ritual: "Water calms. Sit close. Let the anger pass through." },
+      { prompt: "Hold the rosary while you walk. Count the beads. Let your steps be a prayer.", ritual: "Walk slow eventually. Rosary. Breathe." },
+    ]
+  },
+  {
+    id: "depressed", label: "Depressed", emoji: "😞", color: "#7A7A9A", lightColor: "#D8D8E8",
+    items: ["📿 Rosary", "📖 Book", "🌿 Sit outside"],
+    missions: [
+      { prompt: "Just get the bag on. Sit outside. Let the world move around you.", ritual: "Bag on. Outside. Nothing required of you." },
+      { prompt: "Walk to the nearest green space. Sit on the grass if you can.", ritual: "No goal. No output. Just be somewhere living." },
+      { prompt: "Open the book to wherever you left off. Read two pages. That's enough.", ritual: "Two pages. That's it. Really." },
+      { prompt: "Hold the rosary. You don't have to pray if you can't. Just hold it.", ritual: "Rosary in pocket or hand. Something solid. You're still here." },
+      { prompt: "Sit somewhere people are quietly doing things — a library, a café.", ritual: "Somewhere warm. Human noise. You don't have to talk to anyone." },
+    ]
+  },
+  {
+    id: "anxious", label: "Anxious", emoji: "😰", color: "#6B9E7A", lightColor: "#C8E0CE",
+    items: ["📿 Rosary", "📖 Book", "📔 Journal"],
+    missions: [
+      { prompt: "Go to your anchor spot. Hold the rosary. You don't have to fix anything.", ritual: "Anchor spot. Rosary. Breathe. Book open." },
+      { prompt: "Write every anxious thought in the journal. Get it outside your head.", ritual: "Paper holds it. You don't have to carry it alone." },
+      { prompt: "Read one chapter. Let someone else's world replace yours for a while.", ritual: "Book open. One chapter. Come back when you're ready." },
+      { prompt: "Slow walk, no destination. Count your steps to 100, then start again.", ritual: "Count steps. Breathe. Body first, mind follows." },
+      { prompt: "Sketch something small and simple in front of you — a cup, a leaf, a shoe.", ritual: "Small drawing. Focused hand. Quiet mind." },
+    ]
+  },
+  {
+    id: "lonely", label: "Lonely", emoji: "😔", color: "#9E7AB5", lightColor: "#E0D0EC",
+    items: ["✏️ Sketchbook", "📖 Book", "🎮 Switch"],
+    missions: [
+      { prompt: "Go somewhere with gentle human noise. Sketch or read. Alone but not isolated.", ritual: "Library or café. Sketchbook out. Let life pass by." },
+      { prompt: "Take the film camera to a busy street. Photograph strangers' shoes or hands.", ritual: "Camera as connection. You're curious about people. That's love." },
+      { prompt: "Write in your journal about someone you love and why.", ritual: "Journal open. Think of them warmly. You're connected even at a distance." },
+      { prompt: "Play a game on the Switch. Someone built this world for you to enjoy.", ritual: "Online or not. Play. You're not as alone as it feels." },
+      { prompt: "Go to a bookstore and ask a staff member for their current favorite book.", ritual: "One real conversation. That's all you need." },
+    ]
+  },
+  {
+    id: "happy", label: "Happy", emoji: "😊", color: "#E8A838", lightColor: "#FBF0D0",
+    items: ["📷 Film Camera", "📔 Journal"],
+    missions: [
+      { prompt: "Happy eyes see better photographs. Document this version of the day.", ritual: "Camera loaded. Document everything beautiful." },
+      { prompt: "Write down exactly why you're happy right now. Future you will want to know.", ritual: "Journal open. Write it before it fades." },
+      { prompt: "Walk to your favorite spot in the city and just stand in it for a while.", ritual: "Your spot. Your happiness. Be there fully." },
+      { prompt: "Shoot a full roll of film. Photograph everything that catches your eye.", ritual: "No filter. Full presence. Happy shutter finger." },
+      { prompt: "Sketch something you love today. Don't worry how it looks.", ritual: "Sketchbook out. Draw from joy, not skill." },
+    ]
+  },
+  {
+    id: "joyful", label: "Joyful", emoji: "😄", color: "#D4824A", lightColor: "#F5DCC8",
+    items: ["📷 Film Camera", "✏️ Sketchbook", "📿 Rosary"],
+    missions: [
+      { prompt: "Go somewhere beautiful. Don't take photos. Just be there.", ritual: "Fully present. Camera optional. Joy first." },
+      { prompt: "Sketch something ridiculous and joyful — a tiny celebration scene.", ritual: "Sketchbook. No rules. Draw what joy looks like." },
+      { prompt: "Walk somewhere and silently thank everything you see.", ritual: "Gratitude walk. Rosary optional. Eyes open." },
+      { prompt: "Take the camera and only shoot things that make you smile.", ritual: "Joyful eye. Funny details. Document the lightness." },
+      { prompt: "Write the best three things about today, right now, while you feel it.", ritual: "Journal. Three things. Let the joy land on paper." },
+    ]
+  },
+  {
+    id: "playful", label: "Playful", emoji: "🤪", color: "#7AB87A", lightColor: "#CCE8CC",
+    items: ["🎮 Switch", "📷 Film Camera", "✏️ Sketchbook"],
+    missions: [
+      { prompt: "One roll of film. One hour. One neighborhood. See how weird it gets.", ritual: "Self-imposed challenge. Laugh at the results." },
+      { prompt: "Draw a completely made-up map of a fantasy version of your neighborhood.", ritual: "Sketchbook. Invent everything. No rules." },
+      { prompt: "Play a Switch game you've never touched. Give it 30 minutes with full curiosity.", ritual: "Unknown game. Beginner mind. Play like a kid." },
+      { prompt: "Photograph only things that are one specific color today. Make a series.", ritual: "Pick a color. Hunt it everywhere. It's a game." },
+      { prompt: "Write a silly two-page story in your journal — absurd characters, happy ending.", ritual: "Journal. Invent people. Make yourself laugh." },
+    ]
+  },
+  {
+    id: "curious", label: "Curious", emoji: "🤔", color: "#5B9EA8", lightColor: "#C0DDE0",
+    items: ["📔 Journal", "📷 Film Camera", "📖 Book"],
+    missions: [
+      { prompt: "Pick a street you've never walked. Write down everything that surprises you.", ritual: "New street. Journal open. Photograph what's strange." },
+      { prompt: "Go to a bookstore and find a book on a subject you know nothing about.", ritual: "Random aisle. Unknown subject. Buy it if it calls to you." },
+      { prompt: "Photograph details you've always walked past — door handles, textures, corners.", ritual: "Slow walk. Close-up eye. See what you've been ignoring." },
+      { prompt: "Write five questions you've always wanted answers to. Research one on the iPad.", ritual: "Journal. Questions first. iPad for the rabbit hole." },
+      { prompt: "Sit in a new café and sketch the interior — architecture, light, postures.", ritual: "New place. Observant eye. Sketch what you notice." },
+    ]
+  },
+  {
+    id: "lowenergy", label: "Low Energy", emoji: "😴", color: "#A89070", lightColor: "#E8DDD0",
+    items: ["📱 iPad Mini", "🎮 Switch", "📖 Book"],
+    missions: [
+      { prompt: "Bag on. Slow walk. Find a bench. iPad has a show. Rest is valid.", ritual: "Slow everything down. Bench. Screen. Exist." },
+      { prompt: "Read in bed or on the couch. No quota. Stop whenever you want.", ritual: "Book. Comfort. No achievement required today." },
+      { prompt: "Play something gentle on the Switch — no pressure games only.", ritual: "Cozy game. Soft light. Let yourself rest nicely." },
+      { prompt: "Go outside for ten minutes only. Fresh air. Then come back if you need to.", ritual: "Ten minutes. That's the whole mission. You did it." },
+      { prompt: "Watch something beautiful on the iPad — a documentary, a slow film.", ritual: "iPad. Good content. Horizontal if needed. That's fine." },
+    ]
+  }
+];
+
+const TOTAL = emotions.length;
+const SLICE = 360 / TOTAL;
+const CX = 200, CY = 200, OR = 175, IR = 70;
+
+let activeId = null;
+let missionIdx = Object.fromEntries(emotions.map(e => [e.id, 0]));
+
+function polar(cx, cy, r, deg) {
+  const rad = ((deg - 90) * Math.PI) / 180;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+function arc(innerR, outerR, start, end) {
+  const s1 = polar(CX, CY, outerR, start), e1 = polar(CX, CY, outerR, end);
+  const s2 = polar(CX, CY, innerR, end),   e2 = polar(CX, CY, innerR, start);
+  const la = end - start > 180 ? 1 : 0;
+  return `M${s1.x} ${s1.y} A${outerR} ${outerR} 0 ${la} 1 ${e1.x} ${e1.y} L${s2.x} ${s2.y} A${innerR} ${innerR} 0 ${la} 0 ${e2.x} ${e2.y}Z`;
+}
+
+function nextIdx(arr, cur) {
+  if (arr.length <= 1) return 0;
+  let n; do { n = Math.floor(Math.random() * arr.length); } while (n === cur);
+  return n;
+}
+
+function buildWheel() {
+  const svg = document.getElementById('wheel');
+  svg.innerHTML = '';
+
+  // defs
+  svg.innerHTML += `<defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>`;
+
+  emotions.forEach((em, i) => {
+    const start = i * SLICE, end = start + SLICE, mid = start + SLICE / 2;
+    const lp = polar(CX, CY, 130, mid), ep = polar(CX, CY, 108, mid);
+    const isActive = activeId === em.id;
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.style.cursor = 'pointer';
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', arc(IR, OR, start, end));
+    path.setAttribute('fill', isActive ? em.color : '#2A2218');
+    path.setAttribute('stroke', isActive ? em.color : em.color + '55');
+    path.setAttribute('stroke-width', isActive ? '2' : '1');
+    if (isActive) path.setAttribute('filter', 'url(#glow)');
+    path.style.transition = 'all 0.25s ease';
+
+    const emoji = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    emoji.setAttribute('x', ep.x); emoji.setAttribute('y', ep.y);
+    emoji.setAttribute('text-anchor', 'middle'); emoji.setAttribute('dominant-baseline', 'middle');
+    emoji.setAttribute('font-size', '14');
+    emoji.style.pointerEvents = 'none'; emoji.style.userSelect = 'none';
+    emoji.textContent = em.emoji;
+
+    const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    label.setAttribute('x', lp.x); label.setAttribute('y', lp.y);
+    label.setAttribute('text-anchor', 'middle'); label.setAttribute('dominant-baseline', 'middle');
+    label.setAttribute('font-size', '9');
+    label.setAttribute('fill', isActive ? '#FFF8E8' : em.color);
+    label.setAttribute('font-family', 'Georgia, serif');
+    label.setAttribute('font-weight', isActive ? 'bold' : 'normal');
+    label.style.pointerEvents = 'none'; label.style.userSelect = 'none';
+    label.textContent = em.label;
+
+    g.appendChild(path); g.appendChild(emoji); g.appendChild(label);
+    g.addEventListener('click', () => handleClick(em.id));
+    svg.appendChild(g);
+  });
+
+  // center
+  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  circle.setAttribute('cx', CX); circle.setAttribute('cy', CY); circle.setAttribute('r', IR - 2);
+  circle.setAttribute('fill', '#1C1812'); circle.setAttribute('stroke', '#C9A84C44'); circle.setAttribute('stroke-width', '1.5');
+  svg.appendChild(circle);
+
+  [['🎒', CY - 12, 22, '#E8D9B8'], ['Your Bag', CY + 10, 8.5, '#A08060'], ['is ready', CY + 22, 7, '#6A5A40']].forEach(([t, y, sz, fill]) => {
+    const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    txt.setAttribute('x', CX); txt.setAttribute('y', y);
+    txt.setAttribute('text-anchor', 'middle'); txt.setAttribute('dominant-baseline', 'middle');
+    txt.setAttribute('font-size', sz); txt.setAttribute('fill', fill);
+    txt.setAttribute('font-family', 'Georgia, serif');
+    txt.style.pointerEvents = 'none';
+    txt.textContent = t;
+    svg.appendChild(txt);
+  });
+}
+
+function shuffle(id) {
+  const card = document.querySelector('.card');
+  if (card) { card.classList.add('flash'); setTimeout(() => card.classList.remove('flash'), 280); }
+  missionIdx[id] = nextIdx(emotions.find(e => e.id === id).missions, missionIdx[id]);
+  renderCard();
+}
+
+function handleClick(id) {
+  if (activeId === id) {
+    shuffle(id);
+  } else {
+    activeId = id;
+    buildWheel();
+    renderCard();
+  }
+}
+
+function renderCard() {
+  const container = document.getElementById('card-container');
+  if (!activeId) {
+    container.innerHTML = '<div class="empty-card">Tap any emotion on the wheel<br>to see your bag\'s response</div>';
+    return;
+  }
+  const em = emotions.find(e => e.id === activeId);
+  const idx = missionIdx[activeId];
+  const mission = em.missions[idx];
+
+  const dotsHTML = em.missions.map((_, i) => `
+    <div class="dot" data-idx="${i}" style="width:${i===idx?'16px':'6px'};background:${i===idx?em.color:em.color+'44'}"></div>
+  `).join('');
+
+  const itemsHTML = em.items.map(item => `
+    <span class="item-tag" style="background:${em.color}22;border-color:${em.color}44;color:${em.lightColor}">${item}</span>
+  `).join('');
+
+  container.innerHTML = `
+    <div class="card" style="border-color:${em.color}55;border-left-color:${em.color};box-shadow:0 4px 24px ${em.color}22">
+      <div class="card-top">
+        <div class="card-top-left">
+          <span class="card-emoji">${em.emoji}</span>
+          <div>
+            <div class="card-label" style="color:${em.color}">${em.label}</div>
+            <div class="card-sublabel">Today's Loadout</div>
+          </div>
+        </div>
+        <div class="card-top-right">
+          <div class="mission-counter">Mission ${idx+1} / ${em.missions.length}</div>
+          <button class="shuffle-btn" style="background:${em.color}22;border-color:${em.color}66;color:${em.lightColor}">
+            🎲 New Mission
+          </button>
+        </div>
+      </div>
+      <div class="dots">${dotsHTML}</div>
+      <div class="section-label">Reach For</div>
+      <div class="items">${itemsHTML}</div>
+      <div class="section-label">The Mission</div>
+      <p class="mission-text">"${mission.prompt}"</p>
+      <div class="ritual" style="border-top-color:${em.color}22">🕯 Ritual — ${mission.ritual}</div>
+    </div>
+  `;
+
+  // Dot clicks
+  container.querySelectorAll('.dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      missionIdx[activeId] = parseInt(dot.dataset.idx);
+      renderCard();
+    });
+  });
+
+  // Shuffle button
+  container.querySelector('.shuffle-btn').addEventListener('click', () => shuffle(activeId));
+}
+
+buildWheel();
+renderCard();
+</script>
+</body>
+</html>
