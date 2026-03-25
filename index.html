@@ -37,7 +37,9 @@
 .tabs{
   position:fixed;bottom:0;left:0;right:0;
   background:var(--bg2);border-top:1px solid var(--border);
-  display:flex;padding-bottom:env(safe-area-inset-bottom);
+  display:flex;
+  flex-direction: row;
+  padding-bottom:env(safe-area-inset-bottom);
   z-index:100;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
 }
 .tab{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 0 6px;cursor:pointer;gap:3px;transition:opacity 0.15s;}
@@ -388,7 +390,7 @@ function buildWheel(){
 
   emotions.forEach((em,i)=>{
     const s=i*SLICE,e=s+SLICE,mid=s+SLICE/2;
-    const lp=P(130,mid),ep=P(110,mid);
+    const lp=P(142,mid),ep=P(102,mid);
     const active=activeId===em.id;
     const g=ns('g');g.style.cursor='pointer';
 
