@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,76 +7,37 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="My Bag" />
-  <link rel="apple-touch-icon" href="icon.jpg">
   <title>My Bag</title>
   <style>
-    :root {
-      --bg:#1C1812;--bg2:#2A2218;--bg3:#221E14;--bg4:#1E1A12;
-      --border:#3A2E20;--border2:rgba(58,46,32,0.4);
-      --text:#E8D9B8;--text2:#C8B890;--text3:#A08060;--text4:#6A5A40;--text5:#7A6A50;
-      --empty:#4A3A28;--shadow:rgba(0,0,0,0.5);--gold:#E8C87A;--wheel-bg:#2A2218;--wheel-center:#1C1812;
-    }
-    .light {
-      --bg:#F5F0E8;--bg2:#EDE6D8;--bg3:#E8E0D0;--bg4:#F0EAE0;
-      --border:#C8B898;--border2:rgba(200,184,152,0.35);
-      --text:#2A2018;--text2:#4A3828;--text3:#7A5A38;--text4:#9A7A58;--text5:#8A6A48;
-      --empty:#B8A888;--shadow:rgba(0,0,0,0.12);--gold:#9A6A28;--wheel-bg:#EDE6D8;--wheel-center:#F5F0E8;
-    }
+    :root{--bg:#1C1812;--bg2:#2A2218;--bg3:#221E14;--bg4:#1E1A12;--border:#3A2E20;--border2:rgba(58,46,32,0.4);--text:#E8D9B8;--text2:#C8B890;--text3:#A08060;--text4:#6A5A40;--text5:#7A6A50;--empty:#4A3A28;--shadow:rgba(0,0,0,0.5);--gold:#E8C87A;}
+    .light{--bg:#F5F0E8;--bg2:#EDE6D8;--bg3:#E8E0D0;--bg4:#F0EAE0;--border:#C8B898;--border2:rgba(200,184,152,0.35);--text:#2A2018;--text2:#4A3828;--text3:#7A5A38;--text4:#9A7A58;--text5:#8A6A48;--empty:#B8A888;--shadow:rgba(0,0,0,0.12);--gold:#9A6A28;}
     *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
     html,body{height:100%;overscroll-behavior:none;}
-    body{
-      font-family:-apple-system,'Georgia',serif;
-      background:var(--bg);color:var(--text);
-      min-height:100vh;min-height:-webkit-fill-available;
-      transition:background 0.4s,color 0.4s;
-    }
+    body{font-family:-apple-system,'Georgia',serif;background:var(--bg);color:var(--text);min-height:100vh;min-height:-webkit-fill-available;transition:background 0.4s,color 0.4s;}
     ::-webkit-scrollbar{display:none;}
 
 ```
-/* TABS */
-.tabs{
-  position:fixed;bottom:0;left:0;right:0;
-  background:var(--bg2);border-top:1px solid var(--border);
-  display:flex;
-  flex-direction: row;
-  padding-bottom:env(safe-area-inset-bottom);
-  z-index:100;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-}
-.tab{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 0 6px;cursor:pointer;gap:3px;transition:opacity 0.15s;}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);display:flex;flex-direction:row;align-items:stretch;padding-bottom:env(safe-area-inset-bottom);z-index:100;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 0 6px;cursor:pointer;gap:3px;transition:opacity 0.15s;min-width:0;}
 .tab:active{opacity:0.5;}
-.tab-icon{font-size:22px;}
-.tab-label{font-size:10px;color:var(--text3);letter-spacing:0.5px;}
+.tab-icon{font-size:22px;line-height:1;}
+.tab-label{font-size:10px;color:var(--text3);letter-spacing:0.5px;white-space:nowrap;}
 .tab.active .tab-label{color:var(--gold);font-weight:600;}
 
-/* PAGES */
 .page{display:none;min-height:100vh;padding-bottom:90px;overflow-y:auto;}
 .page.active{display:block;}
 
-/* PAGE HEADER */
-.page-header{
-  position:sticky;top:0;z-index:50;
-  background:var(--bg);
-  padding:52px 20px 14px;
-  border-bottom:1px solid var(--border2);
-  display:flex;align-items:flex-end;justify-content:space-between;
-  transition:background 0.4s;
-}
+.page-header{position:sticky;top:0;z-index:50;background:var(--bg);padding:52px 20px 14px;border-bottom:1px solid var(--border2);display:flex;align-items:flex-end;justify-content:space-between;transition:background 0.4s;}
 .ph-sub{font-size:11px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:3px;}
 .ph-title{font-size:24px;color:var(--gold);font-weight:normal;}
-.theme-btn{
-  background:var(--bg2);border:1px solid var(--border);border-radius:20px;
-  padding:7px 15px;font-size:13px;color:var(--text3);cursor:pointer;
-  transition:all 0.2s;white-space:nowrap;font-family:-apple-system,Georgia,serif;
-}
+.theme-btn{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:7px 15px;font-size:13px;color:var(--text3);cursor:pointer;transition:all 0.2s;white-space:nowrap;font-family:-apple-system,Georgia,serif;}
 .theme-btn:active{opacity:0.5;}
 
-/* WHEEL PAGE */
 .wheel-hint{text-align:center;font-size:14px;color:var(--text4);font-style:italic;padding:14px 20px 8px;}
 .wheel-wrap{width:min(390px,100%);margin:0 auto;padding:0 12px;}
 .wheel-wrap svg{width:100%;filter:drop-shadow(0 6px 24px var(--shadow));}
 .card-wrap{padding:14px 16px 0;}
 
-/* CARD */
 .card{border-radius:18px;padding:20px 18px;border-left:3px solid;transition:opacity 0.15s ease,background 0.3s;}
 .card.flash{opacity:0.15;}
 .card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:10px;}
@@ -85,12 +47,7 @@
 .card-sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text4);margin-top:3px;}
 .card-top-right{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0;}
 .mission-counter{font-size:12px;color:var(--text4);}
-.shuffle-btn{
-  border-radius:22px;padding:8px 16px;font-size:14px;cursor:pointer;
-  border-width:1px;border-style:solid;
-  font-family:-apple-system,Georgia,serif;white-space:nowrap;
-  transition:opacity 0.2s;
-}
+.shuffle-btn{border-radius:22px;padding:8px 16px;font-size:14px;cursor:pointer;border-width:1px;border-style:solid;font-family:-apple-system,Georgia,serif;white-space:nowrap;transition:opacity 0.2s;}
 .shuffle-btn:active{opacity:0.5;}
 .dots{display:flex;gap:6px;margin-bottom:14px;align-items:center;}
 .dot{height:7px;border-radius:4px;cursor:pointer;transition:all 0.25s ease;}
@@ -101,17 +58,13 @@
 .ritual{padding-top:12px;font-size:14px;color:var(--text4);border-top-width:1px;border-top-style:solid;line-height:1.5;}
 .empty-card{text-align:center;padding:44px 24px;font-size:16px;font-style:italic;color:var(--empty);border:1.5px dashed var(--border);border-radius:18px;line-height:1.8;}
 
-/* LOG PAGE */
 .log-stats{display:flex;gap:10px;padding:14px 16px 4px;}
 .stat-box{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px 12px;text-align:center;}
 .stat-num{font-size:28px;color:var(--gold);font-weight:normal;}
 .stat-label{font-size:11px;color:var(--text4);margin-top:3px;letter-spacing:0.5px;}
 .log-sec{font-size:11px;color:var(--text3);letter-spacing:3px;text-transform:uppercase;padding:14px 20px 10px;}
 .log-list{padding:0 16px;display:flex;flex-direction:column;gap:10px;}
-.log-entry{
-  background:var(--bg2);border:1px solid var(--border);border-radius:16px;
-  padding:14px 14px;display:flex;align-items:flex-start;gap:12px;border-left:3px solid;
-}
+.log-entry{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:14px;display:flex;align-items:flex-start;gap:12px;border-left:3px solid;}
 .le-emoji{font-size:28px;flex-shrink:0;}
 .le-body{flex:1;min-width:0;}
 .le-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
@@ -124,46 +77,54 @@
 .clear-btn{background:none;border:1px solid var(--border);border-radius:20px;padding:7px 15px;font-size:13px;color:var(--text4);cursor:pointer;font-family:-apple-system,Georgia,serif;}
 .clear-btn:active{opacity:0.5;}
 
-/* BAG PAGE */
 .bag-tip{margin:14px 16px 4px;background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px 18px;}
 .bag-tip-title{font-size:10px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
 .bag-tip-text{font-size:15px;color:var(--text2);font-style:italic;line-height:1.65;}
 .bag-grid{padding:10px 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.bag-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px 14px;display:flex;align-items:center;gap:10px;}
+.bag-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all 0.18s;-webkit-user-select:none;}
+.bag-card:active{transform:scale(0.96);opacity:0.75;}
 .bag-icon{font-size:28px;flex-shrink:0;}
 .bag-name{font-size:15px;color:var(--text2);line-height:1.3;}
+.bag-tap-hint{font-size:10px;color:var(--text4);margin-top:3px;}
 .footer-note{text-align:center;font-size:11px;color:var(--text4);font-style:italic;padding:10px 0 4px;}
+
+.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{width:100%;max-width:520px;background:var(--bg2);border-radius:24px 24px 0 0;border:1px solid var(--border);padding-bottom:env(safe-area-inset-bottom);transform:translateY(100%);transition:transform 0.32s cubic-bezier(0.34,1.4,0.64,1);max-height:88vh;overflow-y:auto;}
+.modal-overlay.open .modal{transform:translateY(0);}
+.modal-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:14px auto 0;}
+.modal-inner{padding:18px 22px 28px;}
+.modal-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.modal-big-icon{font-size:48px;line-height:1;}
+.modal-item-name{font-size:22px;color:var(--gold);font-weight:normal;}
+.modal-item-type{font-size:11px;color:var(--text4);letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
+.modal-desc{font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:16px;}
+.modal-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.modal-tag{border-radius:20px;padding:5px 13px;font-size:12px;background:var(--bg3);border:1px solid var(--border);color:var(--text3);}
+.modal-quote{font-size:15px;color:var(--text4);font-style:italic;border-left:2px solid var(--border);padding-left:14px;line-height:1.65;margin-bottom:20px;}
+.modal-close{width:100%;padding:14px;background:var(--bg3);border:1px solid var(--border);border-radius:14px;font-size:16px;color:var(--text3);cursor:pointer;font-family:-apple-system,Georgia,serif;transition:opacity 0.2s;}
+.modal-close:active{opacity:0.5;}
 ```
 
   </style>
 </head>
 <body>
 
-<!-- WHEEL PAGE -->
-
 <div id="page-wheel" class="page active">
   <div class="page-header">
-    <div>
-      <div class="ph-sub">Your Bag Adventure Kit</div>
-      <div class="ph-title">Loadout Wheel</div>
-    </div>
+    <div><div class="ph-sub">Your Adventure Kit</div><div class="ph-title">Loadout Wheel</div></div>
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">☀️ Light</button>
   </div>
   <div class="wheel-hint">Tap an emotion · tap again to shuffle</div>
   <div class="wheel-wrap"><svg id="wheel" viewBox="0 0 400 400"></svg></div>
   <div class="card-wrap" id="card-wrap">
-    <div class="empty-card">Tap any emotion on the wheel<br>to see your bag's response 🎒</div>
+    <div class="empty-card">Tap any emotion on the wheel<br>to see your bag's response 🧳</div>
   </div>
 </div>
 
-<!-- LOG PAGE -->
-
 <div id="page-log" class="page">
   <div class="page-header">
-    <div>
-      <div class="ph-sub">Your Journey</div>
-      <div class="ph-title">Emotion Log</div>
-    </div>
+    <div><div class="ph-sub">Your Journey</div><div class="ph-title">Emotion Log</div></div>
     <button class="clear-btn" onclick="clearLog()">Clear All</button>
   </div>
   <div id="log-stats" class="log-stats"></div>
@@ -171,395 +132,177 @@
   <div id="log-list" class="log-list"></div>
 </div>
 
-<!-- BAG PAGE -->
-
 <div id="page-bag" class="page">
   <div class="page-header">
-    <div>
-      <div class="ph-sub">What You Carry</div>
-      <div class="ph-title">The Bag</div>
-    </div>
+    <div><div class="ph-sub">What You Carry</div><div class="ph-title">The Bag</div></div>
   </div>
   <div class="bag-tip">
     <div class="bag-tip-title">Today's Reminder</div>
     <div class="bag-tip-text" id="daily-tip"></div>
   </div>
-  <div class="bag-grid">
-    <div class="bag-card"><span class="bag-icon">📔</span><span class="bag-name">Leather Journal</span></div>
-    <div class="bag-card"><span class="bag-icon">✏️</span><span class="bag-name">Sketchbook</span></div>
-    <div class="bag-card"><span class="bag-icon">📱</span><span class="bag-name">iPad Mini 6</span></div>
-    <div class="bag-card"><span class="bag-icon">📖</span><span class="bag-name">Book to Read</span></div>
-    <div class="bag-card"><span class="bag-icon">🎮</span><span class="bag-name">Switch OLED</span></div>
-    <div class="bag-card"><span class="bag-icon">💳</span><span class="bag-name">Wallet</span></div>
-    <div class="bag-card"><span class="bag-icon">📷</span><span class="bag-name">35mm Camera</span></div>
-    <div class="bag-card"><span class="bag-icon">📿</span><span class="bag-name">Rosary</span></div>
-    <div class="bag-card"><span class="bag-icon">🔌</span><span class="bag-name">2× Chargers</span></div>
-    <div class="bag-card"><span class="bag-icon">🍬</span><span class="bag-name">Pack of Gum</span></div>
-  </div>
+  <div class="bag-grid" id="bag-grid"></div>
   <div class="footer-note">© Aldi Airori 2026 · The bag is always ready</div>
 </div>
 
-<!-- TABS -->
-
 <div class="tabs">
   <div class="tab active" id="tab-wheel" onclick="switchTab('wheel')">
-    <span class="tab-icon">🎡</span>
-    <span class="tab-label">Wheel</span>
+    <span class="tab-icon">🎡</span><span class="tab-label">Wheel</span>
   </div>
   <div class="tab" id="tab-log" onclick="switchTab('log')">
-    <span class="tab-icon">📋</span>
-    <span class="tab-label">Log</span>
+    <span class="tab-icon">📋</span><span class="tab-label">Log</span>
   </div>
   <div class="tab" id="tab-bag" onclick="switchTab('bag')">
-    <span class="tab-icon">🎒</span>
-    <span class="tab-label">My Bag</span>
+    <span class="tab-icon">🧳</span><span class="tab-label">My Bag</span>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-inner" id="modal-inner"></div>
   </div>
 </div>
 
 <script>
+const bagItems=[
+  {icon:"📔",name:"Leather Journal",type:"Writing · Reflection",
+   desc:"Your most analog superpower. It doesn't need wifi, battery, or a subscription. Every thought you write here belongs entirely to you — no algorithm, no one else's timeline. As a soil scientist, you're trained to observe the world carefully. This is where that same rigor meets your inner life.",
+   tags:["🖊️ Daily writing","🔬 Field notes","💭 Thought dump","✉️ Letters to self"],
+   quote:"The journal is the one place where being a soil scientist and a person who feels things deeply are the same person."},
+  {icon:"✏️",name:"Sketchbook",type:"Art · Visual Thinking",
+   desc:"You don't have to be an artist to use this. Sketching is thinking made visible — the same way you'd draw a soil profile or annotate a map in QGIS, but for the world around you. It slows you down in the best possible way. One drawing of a café corner teaches you more about observation than an hour of scrolling.",
+   tags:["🗺️ Mental mapping","👁️ Observation practice","🎨 No-rules drawing","🌿 Nature sketching"],
+   quote:"Every sketch is a small act of paying attention. That's enough."},
+  {icon:"📱",name:"iPad Mini 6",type:"Research · Creation",
+   desc:"The portable command center. You've already used it as a second display for QGIS work with your Apple Pencil — so it's literally a research tool you carry. On the go it becomes your reading app, your paper annotator, your GEE dashboard, your note-taker. Thin enough to forget it's there until you need it.",
+   tags:["🌍 GEE on the go","📄 PDF annotation","🖊️ Apple Pencil input","📺 Media & learning"],
+   quote:"Small enough to fit anywhere. Powerful enough to do actual research."},
+  {icon:"📖",name:"Book to Read",type:"Fiction · Ideas",
+   desc:"The one item that asks nothing of you except attention. No notifications, no pull-to-refresh. A good book is the original immersive experience — and for someone whose work lives in data and analysis, fiction is the portal to someone else's entire inner world. Carry one always.",
+   tags:["🌙 Before sleep","☕ Café companion","🧠 Slow thinking","🚌 Commute filler"],
+   quote:"You are never waiting if you have a book. You're just reading somewhere interesting."},
+  {icon:"🎮",name:"Nintendo Switch OLED",type:"Play · Decompression",
+   desc:"This is the item that says: play is not optional, it's maintenance. You carry a vibrant creative and scientific mind — it needs genuine rest, not just passive scrolling. The Switch gives you that. Zelda, cozy games, something weird from the eShop. A full creative world in your pocket with a beautiful OLED screen.",
+   tags:["🧘 Brain decompression","🎒 Portable worlds","🌟 OLED screen","🕹️ Cozy gaming"],
+   quote:"Rest is not the absence of work. Sometimes it looks like exploring Hyrule on a bench."},
+  {icon:"💳",name:"Wallet",type:"Practical · Freedom",
+   desc:"The permission slip for everything else. Coffee you didn't plan for, a book that called your name from a window, bus fare to somewhere new. Keep it light — cards and a little cash — so the bag stays ready. Your wallet is small but it's what makes spontaneity actually possible.",
+   tags:["☕ Spontaneous coffee","📚 Impulse books","🚌 Unplanned trips","🗽 Freedom token"],
+   quote:"Every adventure, no matter how small, starts with being able to pay for it."},
+  {icon:"📷",name:"35mm Film Camera",type:"Photography · Presence",
+   desc:"The intentional one. Unlike your phone, a film camera forces commitment — you get 24 or 36 frames, no preview, no delete. That constraint is the whole point. As someone trained to look closely at land and ecosystems, you already see the world differently. Film just makes that permanent.",
+   tags:["🎞️ 36 frames only","🌅 Light hunting","👁️ Slow photography","🧡 Analog warmth"],
+   quote:"You can't scroll back and choose the better photo. That's what makes each frame matter."},
+  {icon:"📿",name:"Rosary",type:"Spiritual · Grounding",
+   desc:"The quietest thing in the bag and maybe the heaviest in meaning. It doesn't have to be a moment of formal prayer — it can just be something to hold when you're anxious, something to count when your mind is running too fast. In a bag full of screens and lenses and games, this is the one thing that points inward.",
+   tags:["🙏 Grounding object","🕯️ Quiet moments","💛 Something to hold","🌿 Centering ritual"],
+   quote:"Not every item in the bag has to do something. Some things just remind you of who you are."},
+  {icon:"🔌",name:"2× Chargers",type:"Practical · Peace of Mind",
+   desc:"You carry two because you've learned. One for the iPad, one for the Switch or phone. Dead battery anxiety is a real mood-killer when you're out on an adventure — especially when your iPad is mid-annotation or your Switch is mid-dungeon. Two chargers means the bag is always truly ready.",
+   tags:["⚡ Always powered","🔋 No battery anxiety","📱 Multi-device","🧳 Adventure-ready"],
+   quote:"The second charger is not redundant. It's the one that saves you every time."},
+  {icon:"🍬",name:"Pack of Gum",type:"Small Joy · Social",
+   desc:"Underrated. A piece of gum when you're bored on a walk, anxious before something, or just need a small reset. It's also quietly social — offering someone a piece is one of the smallest acts of warmth there is. In a bag full of intentional things, this is the delightfully unserious one.",
+   tags:["😄 Small reset","🤝 Quietly social","🌿 Fresh start","🎒 Bag essential"],
+   quote:"Not everything in the bag needs to be meaningful. Some things just taste good."}
+];
+
 const emotions=[
-  {id:"bored",label:"Bored",emoji:"😐",color:"#C9A84C",lightColor:"#F5E8C0",
-   items:["📷 Film Camera","🎮 Switch","📖 Book"],
-   missions:[
-    {prompt:"Walk somewhere new. Photograph the first interesting thing you find.",ritual:"Camera strap on. Walk out. No destination."},
-    {prompt:"Open the Switch and start a game you've been putting off. Give it one hour.",ritual:"Couch or bench. Switch on. No guilt."},
-    {prompt:"Go to a bookstore or library. Pick up a book you know nothing about.",ritual:"Browse slowly. Touch the spines. Let one choose you."},
-    {prompt:"Sit in a park and sketch whatever is directly in front of you for 20 minutes.",ritual:"Sketchbook open. No erasing. Just draw what you see."},
-    {prompt:"Walk to the nearest coffee shop. Order something you've never tried.",ritual:"New drink. New seat. Watch people for a while."},
-  ]},
-  {id:"sad",label:"Sad",emoji:"😢",color:"#7B9EA8",lightColor:"#D6E8ED",
-   items:["📔 Leather Journal","📿 Rosary","☕ Find a café"],
-   missions:[
-    {prompt:"Sit somewhere warm. Write without editing. Let it out on paper.",ritual:"Order something warm. Journal open. No pressure."},
-    {prompt:"Hold your rosary and sit outside for ten minutes. No phone.",ritual:"Rosary in hand. Eyes soft. Just breathe."},
-    {prompt:"Write a letter in your journal to your past self. Tell them something kind.",ritual:"Quiet corner. Pen slow. Be gentle with yourself."},
-    {prompt:"Find a park bench. Read one chapter. Just one.",ritual:"Bench. Book open. The world can wait."},
-    {prompt:"Take the camera out. Photograph only things that feel like quiet or stillness.",ritual:"Slow walk. Quiet eye. Let the lens be your feeling."},
-  ]},
-  {id:"restless",label:"Restless",emoji:"😤",color:"#C17E4A",lightColor:"#F0DCC8",
-   items:["📷 Film Camera","👟 Just walk"],
-   missions:[
-    {prompt:"Walk fast, camera in hand. Don't stop until something slows you down.",ritual:"Fast walk. Shoot on instinct. No thinking."},
-    {prompt:"Pick a direction you never go. Walk 15 minutes out, 15 back.",ritual:"Earphones out. Bag on. Just go."},
-    {prompt:"Find the tallest hill or building nearby. Climb it. Look out.",ritual:"Move the body. Let the view reset you."},
-    {prompt:"Go somewhere new and sketch the first scene you sit down in front of.",ritual:"Unfamiliar place. Sketchbook out. Settle yourself with a drawing."},
-    {prompt:"Take the Switch somewhere outside. Play on a bench. Change your scenery.",ritual:"Outside air. Game in hand. Move the restless somewhere new."},
-  ]},
-  {id:"angry",label:"Angry",emoji:"😠",color:"#B85C5C",lightColor:"#EDD4D4",
-   items:["👟 Leave immediately","📔 Journal after"],
-   missions:[
-    {prompt:"Leave. Walk hard. Don't decide where until 10 minutes in.",ritual:"Bag on shoulder. Door open. Walk it out."},
-    {prompt:"Find a bench far from where you started. Write everything down raw.",ritual:"Walk first. Journal second. No filter."},
-    {prompt:"Walk until you find something beautiful. Photograph it. Breathe.",ritual:"Move. Find beauty. Let it disarm you."},
-    {prompt:"Go somewhere with water — a fountain, a river, a pond. Sit near it.",ritual:"Water calms. Sit close. Let the anger pass through."},
-    {prompt:"Hold the rosary while you walk. Count the beads. Let your steps be a prayer.",ritual:"Walk slow eventually. Rosary. Breathe."},
-  ]},
-  {id:"depressed",label:"Depressed",emoji:"😞",color:"#7A7A9A",lightColor:"#D8D8E8",
-   items:["📿 Rosary","📖 Book","🌿 Sit outside"],
-   missions:[
-    {prompt:"Just get the bag on. Sit outside. Let the world move around you.",ritual:"Bag on. Outside. Nothing required of you."},
-    {prompt:"Walk to the nearest green space. Sit on the grass if you can.",ritual:"No goal. No output. Just be somewhere living."},
-    {prompt:"Open the book to wherever you left off. Read two pages. That's enough.",ritual:"Two pages. That's it. Really."},
-    {prompt:"Hold the rosary. You don't have to pray if you can't. Just hold it.",ritual:"Rosary in pocket or hand. Something solid. You're still here."},
-    {prompt:"Sit somewhere people are quietly doing things — a library, a café.",ritual:"Somewhere warm. Human noise. You don't have to talk to anyone."},
-  ]},
-  {id:"anxious",label:"Anxious",emoji:"😰",color:"#6B9E7A",lightColor:"#C8E0CE",
-   items:["📿 Rosary","📖 Book","📔 Journal"],
-   missions:[
-    {prompt:"Go to your anchor spot. Hold the rosary. You don't have to fix anything.",ritual:"Anchor spot. Rosary. Breathe. Book open."},
-    {prompt:"Write every anxious thought in the journal. Get it outside your head.",ritual:"Paper holds it. You don't have to carry it alone."},
-    {prompt:"Read one chapter. Let someone else's world replace yours for a while.",ritual:"Book open. One chapter. Come back when you're ready."},
-    {prompt:"Slow walk, no destination. Count your steps to 100, then start again.",ritual:"Count steps. Breathe. Body first, mind follows."},
-    {prompt:"Sketch something small and simple in front of you — a cup, a leaf, a shoe.",ritual:"Small drawing. Focused hand. Quiet mind."},
-  ]},
-  {id:"lonely",label:"Lonely",emoji:"😔",color:"#9E7AB5",lightColor:"#E0D0EC",
-   items:["✏️ Sketchbook","📖 Book","🎮 Switch"],
-   missions:[
-    {prompt:"Go somewhere with gentle human noise. Sketch or read. Alone but not isolated.",ritual:"Library or café. Sketchbook out. Let life pass by."},
-    {prompt:"Take the film camera to a busy street. Photograph strangers' shoes or hands.",ritual:"Camera as connection. You're curious about people. That's love."},
-    {prompt:"Write in your journal about someone you love and why.",ritual:"Journal open. Think of them warmly. You're connected even at a distance."},
-    {prompt:"Play a game on the Switch. Someone built this world for you to enjoy.",ritual:"Online or not. Play. You're not as alone as it feels."},
-    {prompt:"Go to a bookstore and ask a staff member for their current favorite book.",ritual:"One real conversation. That's all you need."},
-  ]},
-  {id:"happy",label:"Happy",emoji:"😊",color:"#E8A838",lightColor:"#FBF0D0",
-   items:["📷 Film Camera","📔 Journal"],
-   missions:[
-    {prompt:"Happy eyes see better photographs. Document this version of the day.",ritual:"Camera loaded. Document everything beautiful."},
-    {prompt:"Write down exactly why you're happy right now. Future you will want to know.",ritual:"Journal open. Write it before it fades."},
-    {prompt:"Walk to your favorite spot in the city and just stand in it for a while.",ritual:"Your spot. Your happiness. Be there fully."},
-    {prompt:"Shoot a full roll of film. Photograph everything that catches your eye.",ritual:"No filter. Full presence. Happy shutter finger."},
-    {prompt:"Sketch something you love today. Don't worry how it looks.",ritual:"Sketchbook out. Draw from joy, not skill."},
-  ]},
-  {id:"joyful",label:"Joyful",emoji:"😄",color:"#D4824A",lightColor:"#F5DCC8",
-   items:["📷 Film Camera","✏️ Sketchbook","📿 Rosary"],
-   missions:[
-    {prompt:"Go somewhere beautiful. Don't take photos. Just be there.",ritual:"Fully present. Camera optional. Joy first."},
-    {prompt:"Sketch something ridiculous and joyful — a tiny celebration scene.",ritual:"Sketchbook. No rules. Draw what joy looks like."},
-    {prompt:"Walk somewhere and silently thank everything you see.",ritual:"Gratitude walk. Rosary optional. Eyes open."},
-    {prompt:"Take the camera and only shoot things that make you smile.",ritual:"Joyful eye. Funny details. Document the lightness."},
-    {prompt:"Write the best three things about today, right now, while you feel it.",ritual:"Journal. Three things. Let the joy land on paper."},
-  ]},
-  {id:"playful",label:"Playful",emoji:"🤪",color:"#7AB87A",lightColor:"#CCE8CC",
-   items:["🎮 Switch","📷 Film Camera","✏️ Sketchbook"],
-   missions:[
-    {prompt:"One roll of film. One hour. One neighborhood. See how weird it gets.",ritual:"Self-imposed challenge. Laugh at the results."},
-    {prompt:"Draw a completely made-up map of a fantasy version of your neighborhood.",ritual:"Sketchbook. Invent everything. No rules."},
-    {prompt:"Play a Switch game you've never touched. Give it 30 minutes with full curiosity.",ritual:"Unknown game. Beginner mind. Play like a kid."},
-    {prompt:"Photograph only things that are one specific color today. Make a series.",ritual:"Pick a color. Hunt it everywhere. It's a game."},
-    {prompt:"Write a silly two-page story in your journal — absurd characters, happy ending.",ritual:"Journal. Invent people. Make yourself laugh."},
-  ]},
-  {id:"curious",label:"Curious",emoji:"🤔",color:"#5B9EA8",lightColor:"#C0DDE0",
-   items:["📔 Journal","📷 Film Camera","📖 Book"],
-   missions:[
-    {prompt:"Pick a street you've never walked. Write down everything that surprises you.",ritual:"New street. Journal open. Photograph what's strange."},
-    {prompt:"Go to a bookstore and find a book on a subject you know nothing about.",ritual:"Random aisle. Unknown subject. Buy it if it calls to you."},
-    {prompt:"Photograph details you've always walked past — door handles, textures, corners.",ritual:"Slow walk. Close-up eye. See what you've been ignoring."},
-    {prompt:"Write five questions you've always wanted answers to. Research one on the iPad.",ritual:"Journal. Questions first. iPad for the rabbit hole."},
-    {prompt:"Sit in a new café and sketch the interior — architecture, light, postures.",ritual:"New place. Observant eye. Sketch what you notice."},
-  ]},
-  {id:"lowenergy",label:"Low Energy",emoji:"😴",color:"#A89070",lightColor:"#E8DDD0",
-   items:["📱 iPad Mini","🎮 Switch","📖 Book"],
-   missions:[
-    {prompt:"Bag on. Slow walk. Find a bench. iPad has a show. Rest is valid.",ritual:"Slow everything down. Bench. Screen. Exist."},
-    {prompt:"Read in bed or on the couch. No quota. Stop whenever you want.",ritual:"Book. Comfort. No achievement required today."},
-    {prompt:"Play something gentle on the Switch — cozy games only.",ritual:"Cozy game. Soft light. Let yourself rest nicely."},
-    {prompt:"Go outside for ten minutes only. Fresh air. Then come back.",ritual:"Ten minutes. That's the whole mission. You did it."},
-    {prompt:"Watch something beautiful on the iPad — a documentary, a slow film.",ritual:"iPad. Good content. Horizontal if needed. That's fine."},
-  ]},
+  {id:"bored",label:"Bored",emoji:"😐",color:"#C9A84C",lightColor:"#F5E8C0",items:["📷 Film Camera","🎮 Switch","📖 Book"],missions:[{prompt:"Walk somewhere new. Photograph the first interesting thing you find.",ritual:"Camera strap on. Walk out. No destination."},{prompt:"Open the Switch and start a game you've been putting off. Give it one hour.",ritual:"Couch or bench. Switch on. No guilt."},{prompt:"Go to a bookstore or library. Pick up a book you know nothing about.",ritual:"Browse slowly. Touch the spines. Let one choose you."},{prompt:"Sit in a park and sketch whatever is directly in front of you for 20 minutes.",ritual:"Sketchbook open. No erasing. Just draw what you see."},{prompt:"Walk to the nearest coffee shop. Order something you've never tried.",ritual:"New drink. New seat. Watch people for a while."}]},
+  {id:"sad",label:"Sad",emoji:"😢",color:"#7B9EA8",lightColor:"#D6E8ED",items:["📔 Leather Journal","📿 Rosary","☕ Find a café"],missions:[{prompt:"Sit somewhere warm. Write without editing. Let it out on paper.",ritual:"Order something warm. Journal open. No pressure."},{prompt:"Hold your rosary and sit outside for ten minutes. No phone.",ritual:"Rosary in hand. Eyes soft. Just breathe."},{prompt:"Write a letter in your journal to your past self. Tell them something kind.",ritual:"Quiet corner. Pen slow. Be gentle with yourself."},{prompt:"Find a park bench. Read one chapter. Just one.",ritual:"Bench. Book open. The world can wait."},{prompt:"Take the camera out. Photograph only things that feel like quiet or stillness.",ritual:"Slow walk. Quiet eye. Let the lens be your feeling."}]},
+  {id:"restless",label:"Restless",emoji:"😤",color:"#C17E4A",lightColor:"#F0DCC8",items:["📷 Film Camera","👟 Just walk"],missions:[{prompt:"Walk fast, camera in hand. Don't stop until something slows you down.",ritual:"Fast walk. Shoot on instinct. No thinking."},{prompt:"Pick a direction you never go. Walk 15 minutes out, 15 back.",ritual:"Earphones out. Bag on. Just go."},{prompt:"Find the tallest hill or building nearby. Climb it. Look out.",ritual:"Move the body. Let the view reset you."},{prompt:"Go somewhere new and sketch the first scene you sit down in front of.",ritual:"Unfamiliar place. Sketchbook out. Settle yourself with a drawing."},{prompt:"Take the Switch somewhere outside. Play on a bench. Change your scenery.",ritual:"Outside air. Game in hand. Move the restless somewhere new."}]},
+  {id:"angry",label:"Angry",emoji:"😠",color:"#B85C5C",lightColor:"#EDD4D4",items:["👟 Leave immediately","📔 Journal after"],missions:[{prompt:"Leave. Walk hard. Don't decide where until 10 minutes in.",ritual:"Bag on shoulder. Door open. Walk it out."},{prompt:"Find a bench far from where you started. Write everything down raw.",ritual:"Walk first. Journal second. No filter."},{prompt:"Walk until you find something beautiful. Photograph it. Breathe.",ritual:"Move. Find beauty. Let it disarm you."},{prompt:"Go somewhere with water — a fountain, a river, a pond. Sit near it.",ritual:"Water calms. Sit close. Let the anger pass through."},{prompt:"Hold the rosary while you walk. Count the beads. Let your steps be a prayer.",ritual:"Walk slow eventually. Rosary. Breathe."}]},
+  {id:"depressed",label:"Depressed",emoji:"😞",color:"#7A7A9A",lightColor:"#D8D8E8",items:["📿 Rosary","📖 Book","🌿 Sit outside"],missions:[{prompt:"Just get the bag on. Sit outside. Let the world move around you.",ritual:"Bag on. Outside. Nothing required of you."},{prompt:"Walk to the nearest green space. Sit on the grass if you can.",ritual:"No goal. No output. Just be somewhere living."},{prompt:"Open the book to wherever you left off. Read two pages. That's enough.",ritual:"Two pages. That's it. Really."},{prompt:"Hold the rosary. You don't have to pray if you can't. Just hold it.",ritual:"Rosary in pocket or hand. Something solid. You're still here."},{prompt:"Sit somewhere people are quietly doing things — a library, a café.",ritual:"Somewhere warm. Human noise. You don't have to talk to anyone."}]},
+  {id:"anxious",label:"Anxious",emoji:"😰",color:"#6B9E7A",lightColor:"#C8E0CE",items:["📿 Rosary","📖 Book","📔 Journal"],missions:[{prompt:"Go to your anchor spot. Hold the rosary. You don't have to fix anything.",ritual:"Anchor spot. Rosary. Breathe. Book open."},{prompt:"Write every anxious thought in the journal. Get it outside your head.",ritual:"Paper holds it. You don't have to carry it alone."},{prompt:"Read one chapter. Let someone else's world replace yours for a while.",ritual:"Book open. One chapter. Come back when you're ready."},{prompt:"Slow walk, no destination. Count your steps to 100, then start again.",ritual:"Count steps. Breathe. Body first, mind follows."},{prompt:"Sketch something small and simple in front of you — a cup, a leaf, a shoe.",ritual:"Small drawing. Focused hand. Quiet mind."}]},
+  {id:"lonely",label:"Lonely",emoji:"😔",color:"#9E7AB5",lightColor:"#E0D0EC",items:["✏️ Sketchbook","📖 Book","🎮 Switch"],missions:[{prompt:"Go somewhere with gentle human noise. Sketch or read. Alone but not isolated.",ritual:"Library or café. Sketchbook out. Let life pass by."},{prompt:"Take the film camera to a busy street. Photograph strangers' shoes or hands.",ritual:"Camera as connection. You're curious about people. That's love."},{prompt:"Write in your journal about someone you love and why.",ritual:"Journal open. Think of them warmly. You're connected even at a distance."},{prompt:"Play a game on the Switch. Someone built this world for you to enjoy.",ritual:"Online or not. Play. You're not as alone as it feels."},{prompt:"Go to a bookstore and ask a staff member for their current favorite book.",ritual:"One real conversation. That's all you need."}]},
+  {id:"happy",label:"Happy",emoji:"😊",color:"#E8A838",lightColor:"#FBF0D0",items:["📷 Film Camera","📔 Journal"],missions:[{prompt:"Happy eyes see better photographs. Document this version of the day.",ritual:"Camera loaded. Document everything beautiful."},{prompt:"Write down exactly why you're happy right now. Future you will want to know.",ritual:"Journal open. Write it before it fades."},{prompt:"Walk to your favorite spot in the city and just stand in it for a while.",ritual:"Your spot. Your happiness. Be there fully."},{prompt:"Shoot a full roll of film. Photograph everything that catches your eye.",ritual:"No filter. Full presence. Happy shutter finger."},{prompt:"Sketch something you love today. Don't worry how it looks.",ritual:"Sketchbook out. Draw from joy, not skill."}]},
+  {id:"joyful",label:"Joyful",emoji:"😄",color:"#D4824A",lightColor:"#F5DCC8",items:["📷 Film Camera","✏️ Sketchbook","📿 Rosary"],missions:[{prompt:"Go somewhere beautiful. Don't take photos. Just be there.",ritual:"Fully present. Camera optional. Joy first."},{prompt:"Sketch something ridiculous and joyful — a tiny celebration scene.",ritual:"Sketchbook. No rules. Draw what joy looks like."},{prompt:"Walk somewhere and silently thank everything you see.",ritual:"Gratitude walk. Rosary optional. Eyes open."},{prompt:"Take the camera and only shoot things that make you smile.",ritual:"Joyful eye. Funny details. Document the lightness."},{prompt:"Write the best three things about today, right now, while you feel it.",ritual:"Journal. Three things. Let the joy land on paper."}]},
+  {id:"playful",label:"Playful",emoji:"🤪",color:"#7AB87A",lightColor:"#CCE8CC",items:["🎮 Switch","📷 Film Camera","✏️ Sketchbook"],missions:[{prompt:"One roll of film. One hour. One neighborhood. See how weird it gets.",ritual:"Self-imposed challenge. Laugh at the results."},{prompt:"Draw a completely made-up map of a fantasy version of your neighborhood.",ritual:"Sketchbook. Invent everything. No rules."},{prompt:"Play a Switch game you've never touched. Give it 30 minutes with full curiosity.",ritual:"Unknown game. Beginner mind. Play like a kid."},{prompt:"Photograph only things that are one specific color today. Make a series.",ritual:"Pick a color. Hunt it everywhere. It's a game."},{prompt:"Write a silly two-page story in your journal — absurd characters, happy ending.",ritual:"Journal. Invent people. Make yourself laugh."}]},
+  {id:"curious",label:"Curious",emoji:"🤔",color:"#5B9EA8",lightColor:"#C0DDE0",items:["📔 Journal","📷 Film Camera","📖 Book"],missions:[{prompt:"Pick a street you've never walked. Write down everything that surprises you.",ritual:"New street. Journal open. Photograph what's strange."},{prompt:"Go to a bookstore and find a book on a subject you know nothing about.",ritual:"Random aisle. Unknown subject. Buy it if it calls to you."},{prompt:"Photograph details you've always walked past — door handles, textures, corners.",ritual:"Slow walk. Close-up eye. See what you've been ignoring."},{prompt:"Write five questions you've always wanted answers to. Research one on the iPad.",ritual:"Journal. Questions first. iPad for the rabbit hole."},{prompt:"Sit in a new café and sketch the interior — architecture, light, postures.",ritual:"New place. Observant eye. Sketch what you notice."}]},
+  {id:"lowenergy",label:"Low Energy",emoji:"😴",color:"#A89070",lightColor:"#E8DDD0",items:["📱 iPad Mini","🎮 Switch","📖 Book"],missions:[{prompt:"Bag on. Slow walk. Find a bench. iPad has a show. Rest is valid.",ritual:"Slow everything down. Bench. Screen. Exist."},{prompt:"Read in bed or on the couch. No quota. Stop whenever you want.",ritual:"Book. Comfort. No achievement required today."},{prompt:"Play something gentle on the Switch — cozy games only.",ritual:"Cozy game. Soft light. Let yourself rest nicely."},{prompt:"Go outside for ten minutes only. Fresh air. Then come back.",ritual:"Ten minutes. That's the whole mission. You did it."},{prompt:"Watch something beautiful on the iPad — a documentary, a slow film.",ritual:"iPad. Good content. Horizontal if needed. That's fine."}]},
 ];
 
-const TIPS=[
-  "The bag is already packed. You just have to pick it up.",
-  "Wonder isn't somewhere else. It's the posture you bring.",
-  "You don't need a free Saturday. Twenty minutes is enough.",
-  "When you feel restless at home, that's the bag calling.",
-  "Carry your identity with you, even on ordinary days.",
-  "The camera doesn't have to shoot to remind you who you are.",
-  "Your anchor spot is waiting. Go back to it today.",
-  "A small mission makes leaving feel like an adventure.",
-  "Alone is not the same as lonely. Your bag knows the difference.",
-  "Rest is a valid mission. Low energy is still energy.",
-  "Say yes to the impulse. The bag is always ready.",
-  "Joy is not a reward. It's the practice.",
-];
+const TIPS=["The bag is already packed. You just have to pick it up.","Wonder isn't somewhere else. It's the posture you bring.","You don't need a free Saturday. Twenty minutes is enough.","When you feel restless at home, that's the bag calling.","Carry your identity with you, even on ordinary days.","The camera doesn't have to shoot to remind you who you are.","Your anchor spot is waiting. Go back to it today.","A small mission makes leaving feel like an adventure.","Alone is not the same as lonely. Your bag knows the difference.","Rest is a valid mission. Low energy is still energy.","Say yes to the impulse. The bag is always ready.","Joy is not a reward. It's the practice."];
 
-// STATE
-const TOTAL=emotions.length, SLICE=360/TOTAL;
-const CX=200,CY=200,OR=175,IR=72;
-let activeId=null;
-let mIdx=Object.fromEntries(emotions.map(e=>[e.id,0]));
-let isLight=false;
-let log=[];
+const TOTAL=emotions.length,SLICE=360/TOTAL,CX=200,CY=200,OR=175,IR=72;
+let activeId=null,mIdx=Object.fromEntries(emotions.map(e=>[e.id,0])),isLight=false,log=[];
 try{log=JSON.parse(localStorage.getItem('bagLog')||'[]');}catch(e){log=[];}
 
-// THEME
-function applyTheme(light){
-  isLight=light;
-  document.body.classList.toggle('light',light);
-  document.getElementById('theme-btn').textContent=light?'🌙 Dark':'☀️ Light';
-  buildWheel();
-}
+function applyTheme(light){isLight=light;document.body.classList.toggle('light',light);document.getElementById('theme-btn').textContent=light?'🌙 Dark':'☀️ Light';buildWheel();}
 function toggleTheme(){applyTheme(!isLight);}
 function autoTheme(){const h=new Date().getHours();return h>=7&&h<19;}
 
-// TABS
-function switchTab(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  document.getElementById('tab-'+id).classList.add('active');
-  window.scrollTo(0,0);
-  if(id==='log')renderLog();
-}
+function switchTab(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');document.getElementById('tab-'+id).classList.add('active');window.scrollTo(0,0);if(id==='log')renderLog();}
 
-// WHEEL
 function P(r,deg){const rad=((deg-90)*Math.PI)/180;return{x:CX+r*Math.cos(rad),y:CY+r*Math.sin(rad)};}
-function arcD(s,e){
-  const s1=P(OR,s),e1=P(OR,e),s2=P(IR,e),e2=P(IR,s),la=e-s>180?1:0;
-  return`M${s1.x} ${s1.y} A${OR} ${OR} 0 ${la} 1 ${e1.x} ${e1.y} L${s2.x} ${s2.y} A${IR} ${IR} 0 ${la} 0 ${e2.x} ${e2.y}Z`;
-}
+function arcD(s,e){const s1=P(OR,s),e1=P(OR,e),s2=P(IR,e),e2=P(IR,s),la=e-s>180?1:0;return`M${s1.x} ${s1.y} A${OR} ${OR} 0 ${la} 1 ${e1.x} ${e1.y} L${s2.x} ${s2.y} A${IR} ${IR} 0 ${la} 0 ${e2.x} ${e2.y}Z`;}
 function ns(tag){return document.createElementNS('http://www.w3.org/2000/svg',tag);}
 
 function buildWheel(){
   const svg=document.getElementById('wheel');
-  const wBg=isLight?'#EDE6D8':'#2A2218';
-  const cBg=isLight?'#F5F0E8':'#1C1812';
-  const cStroke=isLight?'#C8A86888':'#C9A84C44';
+  const wBg=isLight?'#EDE6D8':'#2A2218',cBg=isLight?'#F5F0E8':'#1C1812',cStroke=isLight?'#C8A86888':'#C9A84C44';
   svg.innerHTML=`<defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
-
   emotions.forEach((em,i)=>{
-    const s=i*SLICE,e=s+SLICE,mid=s+SLICE/2;
-    const lp=P(142,mid),ep=P(102,mid);
-    const active=activeId===em.id;
+    const s=i*SLICE,e=s+SLICE,mid=s+SLICE/2,lp=P(142,mid),ep=P(102,mid),active=activeId===em.id;
     const g=ns('g');g.style.cursor='pointer';
-
-    const path=ns('path');
-    path.setAttribute('d',arcD(s,e));
-    path.setAttribute('fill',active?em.color:wBg);
-    path.setAttribute('stroke',active?em.color:em.color+'66');
-    path.setAttribute('stroke-width',active?'2':'1');
-    if(active)path.setAttribute('filter','url(#glow)');
-    path.style.transition='all 0.25s ease';
-
-    const emo=ns('text');
-    emo.setAttribute('x',ep.x);emo.setAttribute('y',ep.y);
-    emo.setAttribute('text-anchor','middle');emo.setAttribute('dominant-baseline','middle');
-    emo.setAttribute('font-size','15');
-    emo.style.pointerEvents='none';emo.style.userSelect='none';
-    emo.textContent=em.emoji;
-
-    const lbl=ns('text');
-    lbl.setAttribute('x',lp.x);lbl.setAttribute('y',lp.y);
-    lbl.setAttribute('text-anchor','middle');lbl.setAttribute('dominant-baseline','middle');
-    lbl.setAttribute('font-size','14');
-    lbl.setAttribute('fill',active?'#FFFFFF':(isLight?'#5A4A30':em.color));
-    lbl.setAttribute('font-family','-apple-system,Georgia,serif');
-    lbl.setAttribute('font-weight',active?'bold':'normal');
-    lbl.style.pointerEvents='none';lbl.style.userSelect='none';
-    lbl.textContent=em.label;
-
-    g.appendChild(path);g.appendChild(emo);g.appendChild(lbl);
-    g.addEventListener('click',()=>handleSlice(em.id));
-    svg.appendChild(g);
+    const path=ns('path');path.setAttribute('d',arcD(s,e));path.setAttribute('fill',active?em.color:wBg);path.setAttribute('stroke',active?em.color:em.color+'66');path.setAttribute('stroke-width',active?'2':'1');if(active)path.setAttribute('filter','url(#glow)');path.style.transition='all 0.25s ease';
+    const emo=ns('text');emo.setAttribute('x',ep.x);emo.setAttribute('y',ep.y);emo.setAttribute('text-anchor','middle');emo.setAttribute('dominant-baseline','middle');emo.setAttribute('font-size','15');emo.style.pointerEvents='none';emo.style.userSelect='none';emo.textContent=em.emoji;
+    const lbl=ns('text');lbl.setAttribute('x',lp.x);lbl.setAttribute('y',lp.y);lbl.setAttribute('text-anchor','middle');lbl.setAttribute('dominant-baseline','middle');lbl.setAttribute('font-size','14');lbl.setAttribute('fill',active?'#FFFFFF':(isLight?'#5A4A30':em.color));lbl.setAttribute('font-family','-apple-system,Georgia,serif');lbl.setAttribute('font-weight',active?'bold':'normal');lbl.style.pointerEvents='none';lbl.style.userSelect='none';lbl.textContent=em.label;
+    g.appendChild(path);g.appendChild(emo);g.appendChild(lbl);g.addEventListener('click',()=>handleSlice(em.id));svg.appendChild(g);
   });
-
-  const c=ns('circle');
-  c.setAttribute('cx',CX);c.setAttribute('cy',CY);c.setAttribute('r',IR-2);
-  c.setAttribute('fill',cBg);c.setAttribute('stroke',cStroke);c.setAttribute('stroke-width','1.5');
-  svg.appendChild(c);
-
-  const tc=isLight?'#8A6A38':'#A08060';
-  const ts=isLight?'#B89868':'#6A5A40';
-  [['🎒',CY-13,28,null],['Your Bag',CY+11,13.5,tc],['is ready!',CY+23,12,ts]].forEach(([t,y,sz,fill])=>{
-    const txt=ns('text');
-    txt.setAttribute('x',CX);txt.setAttribute('y',y);
-    txt.setAttribute('text-anchor','middle');txt.setAttribute('dominant-baseline','middle');
-    txt.setAttribute('font-size',sz);
-    if(fill)txt.setAttribute('fill',fill);
-    txt.setAttribute('font-family','-apple-system,Georgia,serif');
-    txt.style.pointerEvents='none';txt.textContent=t;
-    svg.appendChild(txt);
-  });
+  const c=ns('circle');c.setAttribute('cx',CX);c.setAttribute('cy',CY);c.setAttribute('r',IR-2);c.setAttribute('fill',cBg);c.setAttribute('stroke',cStroke);c.setAttribute('stroke-width','1.5');svg.appendChild(c);
+  const tc=isLight?'#8A6A38':'#A08060',ts=isLight?'#B89868':'#6A5A40';
+  [['🧳',CY-13,28,null],['Your Bag',CY+11,15,tc],['is ready!',CY+23,14.5,ts]].forEach(([t,y,sz,fill])=>{const txt=ns('text');txt.setAttribute('x',CX);txt.setAttribute('y',y);txt.setAttribute('text-anchor','middle');txt.setAttribute('dominant-baseline','middle');txt.setAttribute('font-size',sz);if(fill)txt.setAttribute('fill',fill);txt.setAttribute('font-family','-apple-system,Georgia,serif');txt.style.pointerEvents='none';txt.textContent=t;svg.appendChild(txt);});
 }
 
-// CARD
 function nextIdx(arr,cur){if(arr.length<=1)return 0;let n;do{n=Math.floor(Math.random()*arr.length);}while(n===cur);return n;}
-
-function shuffle(id){
-  const card=document.querySelector('.card');
-  if(card){card.classList.add('flash');setTimeout(()=>card.classList.remove('flash'),280);}
-  mIdx[id]=nextIdx(emotions.find(e=>e.id===id).missions,mIdx[id]);
-  renderCard();
-}
-
-function handleSlice(id){
-  if(activeId===id){shuffle(id);}
-  else{activeId=id;buildWheel();renderCard();
-    setTimeout(()=>document.getElementById('card-wrap').scrollIntoView({behavior:'smooth',block:'start'}),120);}
-}
-
-function addLog(em,mission){
-  const entry={id:Date.now(),emotionId:em.id,emoji:em.emoji,label:em.label,
-    color:em.color,prompt:mission.prompt,time:new Date().toISOString()};
-  log.unshift(entry);
-  if(log.length>100)log=log.slice(0,100);
-  try{localStorage.setItem('bagLog',JSON.stringify(log));}catch(e){}
-}
-
+function shuffle(id){const card=document.querySelector('.card');if(card){card.classList.add('flash');setTimeout(()=>card.classList.remove('flash'),280);}mIdx[id]=nextIdx(emotions.find(e=>e.id===id).missions,mIdx[id]);renderCard();}
+function handleSlice(id){if(activeId===id){shuffle(id);}else{activeId=id;buildWheel();renderCard();setTimeout(()=>document.getElementById('card-wrap').scrollIntoView({behavior:'smooth',block:'start'}),120);}}
+function addLog(em,mission){const entry={id:Date.now(),emotionId:em.id,emoji:em.emoji,label:em.label,color:em.color,prompt:mission.prompt,time:new Date().toISOString()};log.unshift(entry);if(log.length>100)log=log.slice(0,100);try{localStorage.setItem('bagLog',JSON.stringify(log));}catch(e){}}
 function renderCard(){
   const wrap=document.getElementById('card-wrap');
-  if(!activeId){wrap.innerHTML='<div class="empty-card">Tap any emotion on the wheel<br>to see your bag\'s response 🎒</div>';return;}
-  const em=emotions.find(e=>e.id===activeId);
-  const idx=mIdx[activeId];
-  const mission=em.missions[idx];
+  if(!activeId){wrap.innerHTML='<div class="empty-card">Tap any emotion on the wheel<br>to see your bag\'s response 🧳</div>';return;}
+  const em=emotions.find(e=>e.id===activeId),idx=mIdx[activeId],mission=em.missions[idx];
   addLog(em,mission);
-
-  const dots=em.missions.map((_,i)=>
-    `<div class="dot" data-i="${i}" style="width:${i===idx?'18px':'7px'};background:${i===idx?em.color:em.color+'44'}"></div>`
-  ).join('');
-  const items=em.items.map(it=>
-    `<span class="item-tag" style="background:${em.color}1A;border-color:${em.color}55;color:${em.color}">${it}</span>`
-  ).join('');
-
-  wrap.innerHTML=`
-    <div class="card" style="background:linear-gradient(135deg,var(--bg2),var(--bg3));border-left-color:${em.color};border-color:${em.color}44;box-shadow:0 4px 28px ${em.color}15">
-      <div class="card-top">
-        <div class="card-top-left">
-          <span class="card-emoji">${em.emoji}</span>
-          <div>
-            <div class="card-name" style="color:${em.color}">${em.label}</div>
-            <div class="card-sub">Today's Loadout</div>
-          </div>
-        </div>
-        <div class="card-top-right">
-          <div class="mission-counter">Mission ${idx+1} / ${em.missions.length}</div>
-          <button class="shuffle-btn" style="background:${em.color}18;border-color:${em.color}55;color:${em.color}">🎲 New Mission</button>
-        </div>
-      </div>
-      <div class="dots">${dots}</div>
-      <div class="sec-label">Reach For</div>
-      <div class="items">${items}</div>
-      <div class="sec-label">The Mission</div>
-      <p class="mission-text">"${mission.prompt}"</p>
-      <div class="ritual" style="border-top-color:${em.color}22">🕯 Ritual — ${mission.ritual}</div>
-    </div>`;
-
-  wrap.querySelectorAll('.dot').forEach(d=>{
-    d.addEventListener('click',()=>{mIdx[activeId]=parseInt(d.dataset.i);renderCard();});
-  });
+  const dots=em.missions.map((_,i)=>`<div class="dot" data-i="${i}" style="width:${i===idx?'18px':'7px'};background:${i===idx?em.color:em.color+'44'}"></div>`).join('');
+  const items=em.items.map(it=>`<span class="item-tag" style="background:${em.color}1A;border-color:${em.color}55;color:${em.color}">${it}</span>`).join('');
+  wrap.innerHTML=`<div class="card" style="background:linear-gradient(135deg,var(--bg2),var(--bg3));border-left-color:${em.color};border-color:${em.color}44;box-shadow:0 4px 28px ${em.color}15"><div class="card-top"><div class="card-top-left"><span class="card-emoji">${em.emoji}</span><div><div class="card-name" style="color:${em.color}">${em.label}</div><div class="card-sub">Today's Loadout</div></div></div><div class="card-top-right"><div class="mission-counter">Mission ${idx+1} / ${em.missions.length}</div><button class="shuffle-btn" style="background:${em.color}18;border-color:${em.color}55;color:${em.color}">🎲 New Mission</button></div></div><div class="dots">${dots}</div><div class="sec-label">Reach For</div><div class="items">${items}</div><div class="sec-label">The Mission</div><p class="mission-text">"${mission.prompt}"</p><div class="ritual" style="border-top-color:${em.color}22">🕯 Ritual — ${mission.ritual}</div></div>`;
+  wrap.querySelectorAll('.dot').forEach(d=>{d.addEventListener('click',()=>{mIdx[activeId]=parseInt(d.dataset.i);renderCard();});});
   wrap.querySelector('.shuffle-btn').addEventListener('click',()=>shuffle(activeId));
 }
 
-// LOG
-function fmtTime(iso){
-  const d=new Date(iso),now=new Date(),diff=now-d;
-  const m=Math.floor(diff/60000),h=Math.floor(diff/3600000),dy=Math.floor(diff/86400000);
-  if(m<1)return'Just now';if(m<60)return`${m}m ago`;
-  if(h<24)return`${h}h ago`;if(dy===1)return'Yesterday';
-  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
-}
-
+function fmtTime(iso){const d=new Date(iso),now=new Date(),diff=now-d,m=Math.floor(diff/60000),h=Math.floor(diff/3600000),dy=Math.floor(diff/86400000);if(m<1)return'Just now';if(m<60)return`${m}m ago`;if(h<24)return`${h}h ago`;if(dy===1)return'Yesterday';return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
 function deleteEntry(id){log=log.filter(e=>e.id!==id);try{localStorage.setItem('bagLog',JSON.stringify(log));}catch(e){}renderLog();}
 window.deleteEntry=deleteEntry;
-
-function clearLog(){
-  if(log.length===0)return;
-  if(confirm('Clear all entries?')){log=[];try{localStorage.setItem('bagLog',JSON.stringify(log));}catch(e){}renderLog();}
-}
-
+function clearLog(){if(log.length===0)return;if(confirm('Clear all entries?')){log=[];try{localStorage.setItem('bagLog',JSON.stringify(log));}catch(e){}renderLog();}}
 function renderLog(){
-  const today=new Date().toDateString();
-  const todayN=log.filter(e=>new Date(e.time).toDateString()===today).length;
+  const today=new Date().toDateString(),todayN=log.filter(e=>new Date(e.time).toDateString()===today).length;
   const freq=log.reduce((a,e)=>{a[e.emotionId]=(a[e.emotionId]||0)+1;return a;},{});
-  const top=Object.entries(freq).sort((a,b)=>b[1]-a[1])[0];
-  const topEm=top?emotions.find(e=>e.id===top[0]):null;
-
-  document.getElementById('log-stats').innerHTML=`
-    <div class="stat-box"><div class="stat-num">${log.length}</div><div class="stat-label">Total Sessions</div></div>
-    <div class="stat-box"><div class="stat-num">${todayN}</div><div class="stat-label">Today</div></div>
-    <div class="stat-box"><div class="stat-num">${topEm?topEm.emoji:'—'}</div><div class="stat-label">${topEm?'Most Felt':'No Data'}</div></div>
-  `;
-
+  const top=Object.entries(freq).sort((a,b)=>b[1]-a[1])[0],topEm=top?emotions.find(e=>e.id===top[0]):null;
+  document.getElementById('log-stats').innerHTML=`<div class="stat-box"><div class="stat-num">${log.length}</div><div class="stat-label">Total Sessions</div></div><div class="stat-box"><div class="stat-num">${todayN}</div><div class="stat-label">Today</div></div><div class="stat-box"><div class="stat-num">${topEm?topEm.emoji:'—'}</div><div class="stat-label">${topEm?'Most Felt':'No Data'}</div></div>`;
   const list=document.getElementById('log-list');
   if(log.length===0){list.innerHTML='<div class="log-empty">No entries yet.<br>Tap an emotion on the wheel<br>to start your journey. 🎒</div>';return;}
-  list.innerHTML=log.slice(0,40).map(e=>`
-    <div class="log-entry" style="border-left-color:${e.color}">
-      <span class="le-emoji">${e.emoji}</span>
-      <div class="le-body">
-        <div class="le-top">
-          <span class="le-emotion" style="color:${e.color}">${e.label}</span>
-          <span class="le-time">${fmtTime(e.time)}</span>
-        </div>
-        <div class="le-mission">${e.prompt}</div>
-      </div>
-      <button class="log-del" onclick="deleteEntry(${e.id})">×</button>
-    </div>`).join('');
+  list.innerHTML=log.slice(0,40).map(e=>`<div class="log-entry" style="border-left-color:${e.color}"><span class="le-emoji">${e.emoji}</span><div class="le-body"><div class="le-top"><span class="le-emotion" style="color:${e.color}">${e.label}</span><span class="le-time">${fmtTime(e.time)}</span></div><div class="le-mission">${e.prompt}</div></div><button class="log-del" onclick="deleteEntry(${e.id})">×</button></div>`).join('');
 }
 
-// BAG TIP
-document.getElementById('daily-tip').textContent=TIPS[new Date().getDate()%TIPS.length];
+function renderBag(){
+  document.getElementById('bag-grid').innerHTML=bagItems.map((item,i)=>`<div class="bag-card" onclick="openModal(${i})"><span class="bag-icon">${item.icon}</span><div><div class="bag-name">${item.name}</div><div class="bag-tap-hint">Tap to explore ›</div></div></div>`).join('');
+}
+function openModal(idx){
+  const item=bagItems[idx];
+  const tags=item.tags.map(t=>`<span class="modal-tag">${t}</span>`).join('');
+  document.getElementById('modal-inner').innerHTML=`<div class="modal-header"><span class="modal-big-icon">${item.icon}</span><div><div class="modal-item-name">${item.name}</div><div class="modal-item-type">${item.type}</div></div></div><p class="modal-desc">${item.desc}</p><div class="modal-tags">${tags}</div><div class="modal-quote">${item.quote}</div><button class="modal-close" onclick="closeModal()">Done</button>`;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(e){
+  if(e&&e.target!==document.getElementById('modal-overlay'))return;
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
 
-// INIT
+document.getElementById('daily-tip').textContent=TIPS[new Date().getDate()%TIPS.length];
+renderBag();
 applyTheme(autoTheme());
 renderCard();
 </script>
