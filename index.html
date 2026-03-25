@@ -23,7 +23,6 @@ body {
   transition: background 0.5s ease;
 }
 
-/* Time-based theme */
 body.morning { background: #F4EFE6; color: #2A2218; }
 body.morning .card { background: #FFFFFF; color: #2A2218; }
 body.morning .empty-card { color: #777; }
@@ -33,10 +32,10 @@ body.morning .empty-card { color: #777; }
 .header h1 { font-size: 32px; font-weight: 500; }
 .header p { font-size: 14px; color: #8A7A60; margin-top: 8px; }
 
-.wheel-wrap { width: min(420px, 95vw); }
-svg { width: 100%; }
+.wheel-wrap { width: min(420px, 95vw); margin-bottom: 28px; }
+svg { width: 100%; touch-action: none; cursor: pointer; }
 
-.card-wrap { width: 100%; max-width: 460px; margin-top: 28px; }
+.card-wrap { width: 100%; max-width: 460px; }
 
 .card {
   background: linear-gradient(145deg, #2B241A, #201A12);
@@ -47,42 +46,16 @@ svg { width: 100%; }
 }
 
 .card-top { display: flex; justify-content: space-between; margin-bottom: 14px; }
-
 .card-label { font-size: 20px; font-weight: 600; }
 .card-emoji { font-size: 26px; margin-right: 8px; }
 .card-sublabel { font-size: 11px; letter-spacing: 2px; color: #6A5A40; }
-
 .mission-text { font-size: 16px; line-height: 1.7; margin: 14px 0; }
-
 .section-label { font-size: 11px; letter-spacing: 2px; color: #A08060; margin-top: 10px; }
-
 .items { display: flex; flex-wrap: wrap; gap: 8px; }
 .item-tag { font-size: 13px; padding: 6px 12px; border-radius: 20px; border: 1px solid; }
-
-.shuffle-btn {
-  border-radius: 24px;
-  padding: 8px 14px;
-  font-size: 13px;
-  border: 1px solid;
-  cursor: pointer;
-}
-
-.empty-card {
-  text-align: center;
-  padding: 40px;
-  font-size: 15px;
-  color: #5A4A38;
-  border: 1px dashed #3A2E20;
-  border-radius: 16px;
-}
-
-.log {
-  margin-top: 20px;
-  max-width: 460px;
-  width: 100%;
-  font-size: 12px;
-  color: #8A7A60;
-}
+.shuffle-btn { border-radius: 24px; padding: 8px 14px; font-size: 13px; border: 1px solid; cursor: pointer; }
+.empty-card { text-align: center; padding: 40px; font-size: 15px; color: #5A4A38; border: 1px dashed #3A2E20; border-radius: 16px; }
+.log { margin-top: 20px; max-width: 460px; width: 100%; font-size: 12px; color: #8A7A60; }
 .log-entry { margin-bottom: 6px; }
 </style>
 </head>
@@ -124,7 +97,6 @@ const emotions = [
 const TOTAL = emotions.length;
 const SLICE = 360 / TOTAL;
 const CX=200,CY=200,R=170;
-
 let active = localStorage.getItem("lastEmotion") || null;
 let idx = {};
 emotions.forEach(e=>idx[e.id]=0);
@@ -133,13 +105,10 @@ emotions.forEach(e=>idx[e.id]=0);
 const hour = new Date().getHours();
 if(hour < 12) document.body.classList.add("morning");
 
-/* WHEEL */
-function polar(r,deg){
-  const rad=(deg-90)*Math.PI/180;
-  return [CX+r*Math.cos(rad),CY+r*Math.sin(rad)];
-}
+/* WHEEL FUNCTIONS */
+function polar(r,deg){ const rad=(deg-90)*Math.PI/180; return [CX+r*Math.cos(rad),CY+r*Math.sin(rad)]; }
 
-function build(){
+function buildWheel(){
   const svg=document.getElementById("wheel");
   svg.innerHTML="";
   emotions.forEach((e,i)=>{
@@ -148,35 +117,66 @@ function build(){
     const [x2,y2]=polar(R,end);
     const path=document.createElementNS("http://www.w3.org/2000/svg","path");
     path.setAttribute("d",`M${CX} ${CY} L${x1} ${y1} A${R} ${R} 0 0 1 ${x2} ${y2}Z`);
-    path.setAttribute("fill",active===e.id?e.color:"#2A2218");
-    path.onclick=()=>click(e.id);
+    path.setAttribute("fill",e.color);
+    path.setAttribute("stroke","#fff");
+    path.setAttribute("stroke-width","2");
+    path.dataset.id=e.id;
+    path.addEventListener("click",()=>clickEmotion(e.id));
+    path.addEventListener("mouseover",()=>highlightSlice(e.id));
+    path.addEventListener("mouseout",()=>highlightSlice(null));
     svg.appendChild(path);
+
+    // Text label
+    const mid = start + SLICE/2;
+    const [tx,ty] = polar(R*0.65, mid);
+    const text = document.createElementNS("http://www.w3.org/2000/svg","text");
+    text.setAttribute("x",tx);
+    text.setAttribute("y",ty);
+    text.setAttribute("fill","#fff");
+    text.setAttribute("font-size","14");
+    text.setAttribute("font-weight","bold");
+    text.setAttribute("text-anchor","middle");
+    text.setAttribute("alignment-baseline","middle");
+    text.textContent = e.label;
+    svg.appendChild(text);
+  });
+}
+
+let highlighted = null;
+function highlightSlice(id){
+  highlighted = id;
+  const svg=document.getElementById("wheel");
+  svg.querySelectorAll("path").forEach(p=>{
+    if(p.dataset.id===highlighted){
+      p.setAttribute("transform","scale(1.05 1.05) translate(-9 -9)");
+      p.setAttribute("stroke-width","4");
+      p.setAttribute("stroke","#fff");
+    } else {
+      p.setAttribute("transform","");
+      p.setAttribute("stroke-width","2");
+    }
   });
 }
 
 /* CLICK */
-function click(id){
+function clickEmotion(id){
   if(active===id){
     idx[id]=Math.floor(Math.random()*emotions.find(e=>e.id===id).missions.length);
   } else active=id;
-
   localStorage.setItem("lastEmotion", active);
-
   saveLog(active, emotions.find(e=>e.id===active).missions[idx[active]]);
-  build(); render(); renderLog();
+  renderCard(); renderLog();
 }
 
 /* CARD */
-function render(){
+function renderCard(){
   const c=document.getElementById("card-container");
   if(!active){
     c.innerHTML=`<div class="empty-card">Choose how you feel.<br>Your bag will take it from there.</div>`;
     return;
   }
-
   const e=emotions.find(x=>x.id===active);
   const m=e.missions[idx[active]];
-
   c.innerHTML=`
   <div class="card" style="border-color:${e.color}">
     <div class="card-top">
@@ -197,7 +197,7 @@ function render(){
     <div class="mission-text">"${m}"</div>
   </div>`;
 
-  document.querySelector(".shuffle-btn").onclick=()=>click(active);
+  document.querySelector(".shuffle-btn").onclick=()=>clickEmotion(active);
 }
 
 /* LOG */
@@ -213,7 +213,10 @@ function renderLog(){
   container.innerHTML = logs.map(l=>`<div class="log-entry">${l.time} — ${l.emotion}</div>`).join("");
 }
 
-build(); render(); renderLog();
+/* INITIALIZE */
+buildWheel();
+renderCard();
+renderLog();
 </script>
 
 </body>
