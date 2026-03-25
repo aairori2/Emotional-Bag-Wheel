@@ -7,6 +7,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="My Bag" />
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
   <title>My Bag</title>
   <style>
     :root {
@@ -58,8 +61,8 @@
   display:flex;align-items:flex-end;justify-content:space-between;
   transition:background 0.4s;
 }
-.ph-sub{font-size:18px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:3px;}
-.ph-title{font-size:25px;color:var(--gold);font-weight:normal;}
+.ph-sub{font-size:11px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:3px;}
+.ph-title{font-size:24px;color:var(--gold);font-weight:normal;}
 .theme-btn{
   background:var(--bg2);border:1px solid var(--border);border-radius:20px;
   padding:7px 15px;font-size:13px;color:var(--text3);cursor:pointer;
@@ -68,7 +71,7 @@
 .theme-btn:active{opacity:0.5;}
 
 /* WHEEL PAGE */
-.wheel-hint{text-align:center;font-size:30px;color:var(--text4);font-style:italic;padding:14px 20px 8px;}
+.wheel-hint{text-align:center;font-size:14px;color:var(--text4);font-style:italic;padding:14px 20px 8px;}
 .wheel-wrap{width:min(390px,100%);margin:0 auto;padding:0 12px;}
 .wheel-wrap svg{width:100%;filter:drop-shadow(0 6px 24px var(--shadow));}
 .card-wrap{padding:14px 16px 0;}
@@ -142,7 +145,7 @@
 <div id="page-wheel" class="page active">
   <div class="page-header">
     <div>
-      <div class="ph-sub">Your Bag Adventure Kit</div>
+      <div class="ph-sub">Your Adventure Kit</div>
       <div class="ph-title">Loadout Wheel</div>
     </div>
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">☀️ Light</button>
@@ -409,7 +412,7 @@ function buildWheel(){
     const lbl=ns('text');
     lbl.setAttribute('x',lp.x);lbl.setAttribute('y',lp.y);
     lbl.setAttribute('text-anchor','middle');lbl.setAttribute('dominant-baseline','middle');
-    lbl.setAttribute('font-size','9.5');
+    lbl.setAttribute('font-size','12.5');
     lbl.setAttribute('fill',active?'#FFFFFF':(isLight?'#5A4A30':em.color));
     lbl.setAttribute('font-family','-apple-system,Georgia,serif');
     lbl.setAttribute('font-weight',active?'bold':'normal');
@@ -428,7 +431,7 @@ function buildWheel(){
 
   const tc=isLight?'#8A6A38':'#A08060';
   const ts=isLight?'#B89868':'#6A5A40';
-  [['🎒',CY-13,24,null],['Your Bag',CY+11,9.5,tc],['is ready',CY+23,8,ts]].forEach(([t,y,sz,fill])=>{
+  [['🎒',CY-13,28,null],['Your Bag',CY+11,12,tc],['is ready',CY+23,10,ts]].forEach(([t,y,sz,fill])=>{
     const txt=ns('text');
     txt.setAttribute('x',CX);txt.setAttribute('y',y);
     txt.setAttribute('text-anchor','middle');txt.setAttribute('dominant-baseline','middle');
