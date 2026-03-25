@@ -431,7 +431,7 @@ function buildWheel(){
 
   const tc=isLight?'#8A6A38':'#A08060';
   const ts=isLight?'#B89868':'#6A5A40';
-  [['🎒',CY-13,24,null],['Your Bag',CY+11,12,tc],['is ready',CY+23,10,ts]].forEach(([t,y,sz,fill])=>{
+  [['🎒',CY-13,24,null],['Your Bag',CY+11,9.5,tc],['is ready',CY+23,8,ts]].forEach(([t,y,sz,fill])=>{
     const txt=ns('text');
     txt.setAttribute('x',CX);txt.setAttribute('y',y);
     txt.setAttribute('text-anchor','middle');txt.setAttribute('dominant-baseline','middle');
