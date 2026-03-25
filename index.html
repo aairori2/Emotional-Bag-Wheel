@@ -42,7 +42,7 @@
 .tab{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 0 6px;cursor:pointer;gap:3px;transition:opacity 0.15s;}
 .tab:active{opacity:0.5;}
 .tab-icon{font-size:22px;}
-.tab-label{font-size:15px;color:var(--text3);letter-spacing:0.5px;}
+.tab-label{font-size:10px;color:var(--text3);letter-spacing:0.5px;}
 .tab.active .tab-label{color:var(--gold);font-weight:600;}
 
 /* PAGES */
@@ -58,8 +58,8 @@
   display:flex;align-items:flex-end;justify-content:space-between;
   transition:background 0.4s;
 }
-.ph-sub{font-size:11px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:3px;}
-.ph-title{font-size:24px;color:var(--gold);font-weight:normal;}
+.ph-sub{font-size:18px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:3px;}
+.ph-title{font-size:25px;color:var(--gold);font-weight:normal;}
 .theme-btn{
   background:var(--bg2);border:1px solid var(--border);border-radius:20px;
   padding:7px 15px;font-size:13px;color:var(--text3);cursor:pointer;
@@ -68,7 +68,7 @@
 .theme-btn:active{opacity:0.5;}
 
 /* WHEEL PAGE */
-.wheel-hint{text-align:center;font-size:24px;color:var(--text4);font-style:italic;padding:14px 20px 8px;}
+.wheel-hint{text-align:center;font-size:30px;color:var(--text4);font-style:italic;padding:14px 20px 8px;}
 .wheel-wrap{width:min(390px,100%);margin:0 auto;padding:0 12px;}
 .wheel-wrap svg{width:100%;filter:drop-shadow(0 6px 24px var(--shadow));}
 .card-wrap{padding:14px 16px 0;}
@@ -142,7 +142,7 @@
 <div id="page-wheel" class="page active">
   <div class="page-header">
     <div>
-      <div class="ph-sub">Your Adventure Kit</div>
+      <div class="ph-sub">Your Bag Adventure Kit</div>
       <div class="ph-title">Loadout Wheel</div>
     </div>
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">☀️ Light</button>
