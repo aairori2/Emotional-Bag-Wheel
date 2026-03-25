@@ -34,20 +34,52 @@
 
 ```
 /* TABS */
-.tabs{
-  position:fixed;bottom:0;left:0;right:0;
-  background:var(--bg2);border-top:1px solid var(--border);
-  display:flex;
-  flex-direction: row;
-  padding-bottom:env(safe-area-inset-bottom);
-  z-index:100;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+/* TABS */
+.tabs {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;               /* horizontal layout */
+  flex-direction: row;         /* ensures icons are side by side */
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 6px); /* safe for iPhone home indicator */
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
-.tab{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 0 6px;cursor:pointer;gap:3px;transition:opacity 0.15s;}
-.tab:active{opacity:0.5;}
-.tab-icon{font-size:22px;}
-.tab-label{font-size:10px;color:var(--text3);letter-spacing:0.5px;}
-.tab.active .tab-label{color:var(--gold);font-weight:600;}
 
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;      /* icon above label */
+  align-items: center;
+  justify-content: center;     /* vertically center contents */
+  padding: 10px 0 6px;
+  cursor: pointer;
+  gap: 3px;
+  transition: opacity 0.15s;
+}
+
+.tab:active {
+  opacity: 0.5;
+}
+
+.tab-icon {
+  font-size: 22px;
+}
+
+.tab-label {
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.5px;
+}
+
+.tab.active .tab-label {
+  color: var(--gold);
+  font-weight: 600;
+}
 /* PAGES */
 .page{display:none;min-height:100vh;padding-bottom:90px;overflow-y:auto;}
 .page.active{display:block;}
@@ -412,7 +444,7 @@ function buildWheel(){
     const lbl=ns('text');
     lbl.setAttribute('x',lp.x);lbl.setAttribute('y',lp.y);
     lbl.setAttribute('text-anchor','middle');lbl.setAttribute('dominant-baseline','middle');
-    lbl.setAttribute('font-size','10');
+    lbl.setAttribute('font-size','15');
     lbl.setAttribute('fill',active?'#FFFFFF':(isLight?'#5A4A30':em.color));
     lbl.setAttribute('font-family','-apple-system,Georgia,serif');
     lbl.setAttribute('font-weight',active?'bold':'normal');
