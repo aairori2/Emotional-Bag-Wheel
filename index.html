@@ -39,36 +39,32 @@
   bottom: 0;
   left: 0;
   right: 0;
-  display: flex;                 /* horizontal layout */
-  flex-direction: row;           /* icons side by side */
-  justify-content: space-around; /* distribute tabs evenly */
-  align-items: center;           /* vertically center icons */
+  display: flex !important;          /* force flex */
+  flex-direction: row !important;    /* horizontal */
+  justify-content: space-between;    /* even spacing */
+  align-items: center;               /* vertical centering */
+  width: 100vw !important;           /* full viewport width */
+  max-width: 100% !important;
   background: var(--bg2);
   border-top: 1px solid var(--border);
   padding-bottom: calc(env(safe-area-inset-bottom) + 6px);
   z-index: 100;
-  backdrop-filter: blur(16px);
+  box-sizing: border-box;
   -webkit-backdrop-filter: blur(16px);
-  min-width: 100%;               /* ensures flex doesn't shrink */
+  backdrop-filter: blur(16px);
 }
 
 .tab {
-  flex: 1;                       /* each tab takes equal width */
-  min-width: 0;                   /* prevents overflow issues */
+  flex: 1 1 auto !important;          /* each tab takes equal space */
+  min-width: 0 !important;            /* prevents shrinking */
   display: flex;
-  flex-direction: column;         /* icon above label */
+  flex-direction: column;
   align-items: center;
-  justify-content: center;        /* center icon + label vertically */
+  justify-content: center;
   padding: 10px 0 6px;
   cursor: pointer;
   gap: 3px;
-  transition: opacity 0.15s;
 }
-
-.tab:active { opacity: 0.5; }
-.tab-icon { font-size: 22px; }
-.tab-label { font-size: 10px; color: var(--text3); letter-spacing: 0.5px; }
-.tab.active .tab-label { color: var(--gold); font-weight: 600; }
 
 /* PAGES */
 .page{display:none;min-height:100vh;padding-bottom:90px;overflow-y:auto;}
@@ -434,7 +430,7 @@ function buildWheel(){
     const lbl=ns('text');
     lbl.setAttribute('x',lp.x);lbl.setAttribute('y',lp.y);
     lbl.setAttribute('text-anchor','middle');lbl.setAttribute('dominant-baseline','middle');
-    lbl.setAttribute('font-size','12');
+    lbl.setAttribute('font-size','14');
     lbl.setAttribute('fill',active?'#FFFFFF':(isLight?'#5A4A30':em.color));
     lbl.setAttribute('font-family','-apple-system,Georgia,serif');
     lbl.setAttribute('font-weight',active?'bold':'normal');
@@ -453,7 +449,7 @@ function buildWheel(){
 
   const tc=isLight?'#8A6A38':'#A08060';
   const ts=isLight?'#B89868':'#6A5A40';
-  [['🎒',CY-13,24,null],['Your Bag',CY+11,11.5,tc],['is ready',CY+23,10,ts]].forEach(([t,y,sz,fill])=>{
+  [['🎒',CY-13,26,null],['Your Bag',CY+11,14,tc],['is ready',CY+23,13,ts]].forEach(([t,y,sz,fill])=>{
     const txt=ns('text');
     txt.setAttribute('x',CX);txt.setAttribute('y',y);
     txt.setAttribute('text-anchor','middle');txt.setAttribute('dominant-baseline','middle');
